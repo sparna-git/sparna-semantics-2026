@@ -1,2 +1,17 @@
-# sparna-semantics-2026
-Sparna Semantics 2026 proposal
+# Sparna-Semantics-2026
+
+## Development mode
+```
+bundle install
+bundle exec guard
+```
+
+## Build
+```
+bundle install
+bundle exec nanoc compile
+```
+
+View on http://localhost:3000/
+
+This article makes use of the [ScholarMarkdown](https://github.com/rubensworks/ScholarMarkdown/) framework.
