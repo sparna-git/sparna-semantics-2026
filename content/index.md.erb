@@ -1,14 +1,15 @@
 ---
-title: "My Awesome Article"
+title: "MCP-over-SPARQL"
 ---
 <header markdown="1">
 # <%= @item[:title] %>
 
 {:#authors}
-- <%= person 'John Doe', 'http://www.example.org/', 'http://www.example.org/#me' %>
+- <%= person 'Thomas Francart', 'https://www.sparna.fr/fr/team/', 'https://orcid.org/0000-0000-0000-0000' %>
+- <%= person 'Tarek Bouzelat', 'https://www.sparna.fr/fr/team/', 'https://orcid.org/0000-0000-0000-0000' %>
 
 {:#affiliations}
-- {:#myaffiliation} Awesome Inc.
+- {:#aff1} Sparna
 
 </header>
 
@@ -20,14 +21,19 @@ title: "My Awesome Article"
 <span class='printfont4'> </span>
 
 <div id="content">
-  <%= section 'abstract' %>
+  <%= section '1-abstract' %>
 
 <main>
   <!-- Add sections by specifying their file name, excluding the '.md' suffix. -->
-  <%= section 'introduction' %>
+  <%= section '1-introduction' %>
+  <%= section '2-architecture' %>
+  <%= section '3-workflow' %>
+  <%= section '4-demonstration' %>
+  <%= section '5-conclusion' %>
+  <%= section '6-ethics' %>
+  <%= section '7-genai' %>
 </main>
 
 <footer></footer>
 
-</div>
 </div>
