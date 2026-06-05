@@ -8,10 +8,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   
   <meta name="citation_title" content="MCP-over-SPARQL">
-  <meta name="citation_author" content="Thomas Francart" />
   <meta name="citation_author" content="Tarek Bouzelat" />
+  <meta name="citation_author" content="Thomas Francart" />
   
-  <meta name="citation_publication_date" content="2026/06/04" />
+  <meta name="citation_publication_date" content="2026/06/05" />
 </head>
 
 <body prefix="dctypes: http://purl.org/dc/dcmitype/ pimspace: http://www.w3.org/ns/pim/space# rsa: http://www.w3.org/ns/auth/rsa# cert: http://www.w3.org/ns/auth/cert# wgs: http://www.w3.org/2003/01/geo/wgs84_pos# biblio: http://purl.org/net/biblio# bibo: http://purl.org/ontology/bibo/ book: http://purl.org/NET/book/vocab# ov: http://open.vocab.org/terms/ doap: http://usefulinc.com/ns/doap# dbr: http://dbpedia.org/resource/ dbp: http://dbpedia.org/property/ sio: http://semanticscience.org/resource/ opmw: http://www.opmw.org/ontology/ deo: http://purl.org/spar/deo/ doco: http://purl.org/spar/doco/ cito: http://purl.org/spar/cito/ fabio: http://purl.org/spar/fabio/ solid: http://www.w3.org/ns/solid/terms# acl: http://www.w3.org/ns/auth/acl# dio: https://w3id.org/dio# lsc: http://linkedscience.org/lsc/ns#" typeof="schema:CreativeWork sioc:Post prov:Entity lsc:Research">
@@ -19,8 +19,8 @@
   <h1 id="mcp-over-sparql">MCP-over-SPARQL</h1>
 
   <ul id="authors">
-    <li><a id="author-name" rev="lsc:participatesIn" property="foaf:maker schema:creator schema:author schema:publisher" href="https://www.sparna.fr/fr/team/" typeof="foaf:Person schema:Person" resource="https://orcid.org/0000-0000-0000-0000">Thomas Francart</a></li>
-    <li><a id="author-name" rev="lsc:participatesIn" property="foaf:maker schema:creator schema:author schema:publisher" href="https://www.sparna.fr/fr/team/" typeof="foaf:Person schema:Person" resource="https://orcid.org/0000-0000-0000-0000">Tarek Bouzelat</a></li>
+    <li><a id="author-name" rev="lsc:participatesIn" property="foaf:maker schema:creator schema:author schema:publisher" href="https://www.sparna.fr/fr/team/" typeof="foaf:Person schema:Person" resource="">Tarek Bouzelat</a></li>
+    <li><a id="author-name" rev="lsc:participatesIn" property="foaf:maker schema:creator schema:author schema:publisher" href="https://www.linkedin.com/in/thomasfrancart/" typeof="foaf:Person schema:Person" resource="https://orcid.org/0000-0003-4648-0065">Thomas Francart</a></li>
   </ul>
 
   <ul id="affiliations">
@@ -41,7 +41,7 @@
 <div datatype="rdf:HTML" property="schema:description">
       <h2 property="schema:name">Abstract</h2>
 
-      <p id="abstract">We present MCP-over-SPARQL, a Model Context Protocol server for natural-language access to knowledge graphs. The server connects an MCP-capable LLM client to a SPARQL endpoint and exposes a small set of dedicated tools for schema overview, curated examples, node-shape discovery, entity reconciliation, and SPARQL execution. This lets a user question be turned into a live query through a controlled sequence of tool calls rather than a single black-box step. By grounding query construction in SHACL and resolving named entities against the identifiers actually used in the graph, the system reduces schema guessing and returns real data from the endpoint instead of model-generated text. We demonstrate the approach on RUIM, the Uniq interoperable reference for medicines, and show how it supports controlled, schema-aware querying of domain-specific knowledge graphs.</p>
+      <p id="abstract">We present MCP-over-SPARQL, a Model Context Protocol server for natural-language access to knowledge graphs. The server connects an MCP-capable LLM client to a SPARQL endpoint and exposes a small set of dedicated tools for schema overview, curated examples, knowledge graph strcuture discovery, entity reconciliation, and SPARQL execution. This provides all the necessary primitives for an LLM client to turn a natural language question into a SPARQL query, using correct identifiers from the knowledge graph. By grounding query construction in SHACL and resolving named entities against the identifiers actually used in the graph, the system reduces schema guessing and returns real data from the endpoint instead of model-generated text. We demonstrate the approach on the the Unique Interoperability Referential of Medical Specialties from the French e-health agency, and show how it supports controlled, schema-aware querying of domain-specific knowledge graphs.</p>
 
     </div>
 </section>
@@ -53,11 +53,9 @@
 <div datatype="rdf:HTML" property="schema:description">
         <h2 property="schema:name">Introduction</h2>
 
-        <p>Knowledge graphs are powerful sources of structured data, but they are often difficult to query. Writing a correct <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.w3.org/TR/sparql11-query/">SPARQL</a> <span class="references">[<a href="#ref-1">1</a>]</span> query requires understanding the underlying schema, the available predicates, and the identifiers used in the graph. For users who are not familiar with SPARQL, this becomes a real obstacle when they want to turn an information need into a query and retrieve the corresponding data.</p>
+        <p>Knowledge graphs are sources of trustworthy structured data, but they are often difficult to query. Writing a correct <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.w3.org/TR/sparql11-query/">SPARQL</a> <span class="references">[<a href="#ref-1">1</a>]</span> query requires understanding the underlying schema, the available predicates, and the identifiers used in the graph. For users who are not familiar with SPARQL, this becomes a real obstacle when they want to turn an information need into a query and retrieve the corresponding data.</p>
 
-        <p>Large language models can help address this problem when they are connected to external tools through the <a property="schema:citation http://purl.org/spar/cito/cites" href="https://modelcontextprotocol.io">Model Context Protocol</a> <span class="references">[<a href="#ref-2">2</a>]</span>. In this paper, we present an MCP server driven by a <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.w3.org/TR/shacl/">SHACL</a> <span class="references">[<a href="#ref-3">3</a>]</span> specefication of the target data model. The server exposes the structure of the graph through a small set of schema-grounded tools that let an MCP-capable client discover the schema, inspect relevant shapes, reconcile named entities, and execute queries against the live endpoint.</p>
-
-        <p>The key idea is to ground query construction in the SHACL description of the data model rather than in the model’s prior knowledge. This makes the interaction more controlled, more transparent, and easier to adapt when the schema or the data evolve. We show how this approach supports natural-language access to knowledge graphs without hiding their structure.</p>
+        <p>Large language models can help address this problem when they are connected to external tools through the <a property="schema:citation http://purl.org/spar/cito/cites" href="https://modelcontextprotocol.io">Model Context Protocol</a> <span class="references">[<a href="#ref-2">2</a>]</span>. In this demo, we present an MCP server driven by the <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.w3.org/TR/shacl/">SHACL</a> <span class="references">[<a href="#ref-3">3</a>]</span> specification of the underlying knowledge graph. The server exposes the structure of the graph through a small set of schema-grounded tools that let an MCP-capable client discover the schema, inspect relevant entities, reconcile named entities, and execute SPARQL queries.</p>
 
       </div>
 </section>
@@ -75,11 +73,26 @@
           </figcaption>
 </figure>
 
-        <p>The server can be accessed through two transports. A local stdio transport is used for development, testing, and local use, while a Streamable HTTP transport serves remote clients. Each project corresponds to a specific knowledge graph, with its own SHACL model and SPARQL endpoint, and is exposed as a dedicated MCP server with project-specific tools.</p>
+        <p>The server can be accessed through two transports. A local stdio transport is used for development, testing, and local use, while a Streamable HTTP transport serves remote clients. The server can be configured per “project”. Each project corresponds to a specific knowledge graph, with its own SHACL model and SPARQL endpoint, and is exposed as a dedicated MCP server.</p>
 
-        <p>On the backend, the server relies on a SHACL shapes graph that provides a complete description of the target data model. This graph is consumed by two tools. The schema-overview tool derives a high-level synthesis of the graph, while node-shape discovery returns the detailed definitions of the shapes relevant to a question. The class constraint used later during reconciliation is taken from the target classes returned by this discovery step. Together, these tools provide the Client with the structure it needs to build correct, schema-grounded queries instead of guessing predicates or paths.</p>
+      </div>
+</section>
 
-        <p>Before execution, named entities such as an active substance or a route of administration are reconciled against the IRIs actually used in the graph, using the class identified during node-shape discovery. Each project is configured with a single, interchangeable reconciliation service that follows the W3C/OpenRefine <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.w3.org/community/reports/reconciliation/CG-FINAL-specs-0.2-20230410/">Reconciliation Service API</a> <span class="references">[<a href="#ref-4">4</a>]</span>, for example a SPARQL-based search, a local full-text index, or an external search-index API. The final query is then sent to the configured endpoint and the results are returned to the client.</p>
+  <section id="mcp-tools-description" inlist="" rel="schema:hasPart" resource="#mcp-tools-description">
+<div datatype="rdf:HTML" property="schema:description">
+        <h2 property="schema:name">MCP Tools description</h2>
+
+        <p id="tools-description">The schema-overview tool derives a high-level synthesis of the graph… it returns markdown… it lists… The schema overview is deliberately incomplete, it acts as a high-level table of contents that is not sufficient to write a correct query.</p>
+
+        <p>The graph structure discovery tool returns the detailed definitions of the shapes relevant to a question…. it also reads the SHACL file and returns a detailled list of properties for each kind of entity in the graph. For each property, the following information are provided: …</p>
+
+        <p>Beyond structural constraints, each shape can also carry natural-language guidance through sh:agentInstruction, a non-validating feature introduced in SHACL 1.2. When the client discovers a shape, these instructions are returned alongside its predicates and cardinalities, allowing the data publisher to guide how a class or property should be used, for example by indicating which identifier to prefer or how to interpret a relation. The schema therefore conveys not only the structure of the graph, but also human-authored hints for the agent.</p>
+
+        <p>The example tools…</p>
+
+        <p>The entity reconciliation MCP tool relies on an underlying service that conforms with the <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.w3.org/community/reports/reconciliation/CG-FINAL-specs-0.2-20230410/">Reconciliation Service API Specification</a> <span class="references">[<a href="#ref-4">4</a>]</span>. The reconciliation tool takes 2 input parameters : a label to search, and the URI identifier of the shape of the entity to lookup. It returns a list of entities, each with a score. The actual implementation of this service can be either a plain SPARQL-based search (not efficient and not suitable for plain-text lookups), proprietary full-text indexing capabilities of the triplestore, an existing API, or a custom-built search index, filled with the labels of the entities from the graph. Splitting</p>
+
+        <p>Finally, the SPARQL tool simply takes a SPARQL query as input, and returns the result in the XXXX format.</p>
 
       </div>
 </section>
@@ -97,9 +110,7 @@
           </figcaption>
 </figure>
 
-        <p>The workflow is designed to prevent the client from inventing graph terms. The schema overview is deliberately incomplete, it acts as a high-level table of contents that is not sufficient to write SPARQL. To obtain the full and exact information it needs, the client therefore calls the node-shape discovery tool, which returns the precise predicate IRIs, directions, and cardinalities of the requested shapes before any query is composed. This ordering is enforced by the tools’ own descriptions, which instruct the client to go through discovery first and never to guess predicates or paths from prior knowledge.</p>
-
-        <p>Beyond structural constraints, each shape can also carry natural-language guidance through sh:agentInstruction, a non-validating feature introduced in SHACL 1.2. When the client discovers a shape, these instructions are returned alongside its predicates and cardinalities, allowing the data publisher to guide how a class or property should be used, for example by indicating which identifier to prefer or how to interpret a relation. The schema therefore conveys not only the structure of the graph, but also human-authored hints for the agent.</p>
+        <p>This ordering is enforced by the tools’ own descriptions, which instruct the client to go through discovery first and never to guess predicates or paths from prior knowledge.</p>
 
         <p>When the question mentions named entities, they are reconciled to the IRIs actually used in the graph before the final query is assembled, so the query targets exact resources rather than relying on fragile label matching. The query is then executed against the endpoint, and the user receives its result, real data drawn from the graph, produced by a query the client could not have written from its prior knowledge alone.</p>
 
