@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta charset="utf-8" />
-  <title property="foaf:name schema:name">MCP-over-SPARQL</title>
+  <title property="foaf:name schema:name">MCP-over-SPARQL : Giving AI the tools to query knowledge graphs</title>
   <link rel="stylesheet" media="screen" href="styles/screen.css" />
   <link rel="stylesheet" media="print"  href="styles/print.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   
-  <meta name="citation_title" content="MCP-over-SPARQL">
+  <meta name="citation_title" content="MCP-over-SPARQL : Giving AI the tools to query knowledge graphs">
   <meta name="citation_author" content="Tarek Bouzelat" />
   <meta name="citation_author" content="Thomas Francart" />
   
@@ -16,7 +16,7 @@
 
 <body prefix="dctypes: http://purl.org/dc/dcmitype/ pimspace: http://www.w3.org/ns/pim/space# rsa: http://www.w3.org/ns/auth/rsa# cert: http://www.w3.org/ns/auth/cert# wgs: http://www.w3.org/2003/01/geo/wgs84_pos# biblio: http://purl.org/net/biblio# bibo: http://purl.org/ontology/bibo/ book: http://purl.org/NET/book/vocab# ov: http://open.vocab.org/terms/ doap: http://usefulinc.com/ns/doap# dbr: http://dbpedia.org/resource/ dbp: http://dbpedia.org/property/ sio: http://semanticscience.org/resource/ opmw: http://www.opmw.org/ontology/ deo: http://purl.org/spar/deo/ doco: http://purl.org/spar/doco/ cito: http://purl.org/spar/cito/ fabio: http://purl.org/spar/fabio/ solid: http://www.w3.org/ns/solid/terms# acl: http://www.w3.org/ns/auth/acl# dio: https://w3id.org/dio# lsc: http://linkedscience.org/lsc/ns#" typeof="schema:CreativeWork sioc:Post prov:Entity lsc:Research">
   <header>
-  <h1 id="mcp-over-sparql">MCP-over-SPARQL</h1>
+  <h1 id="mcp-over-sparql--giving-ai-the-tools-to-query-knowledge-graphs">MCP-over-SPARQL : Giving AI the tools to query knowledge graphs</h1>
 
   <ul id="authors">
     <li><a id="author-name" rev="lsc:participatesIn" property="foaf:maker schema:creator schema:author schema:publisher" href="https://www.sparna.fr/fr/team/" typeof="foaf:Person schema:Person" resource="">Tarek Bouzelat</a></li>
@@ -41,7 +41,7 @@
 <div datatype="rdf:HTML" property="schema:description">
       <h2 property="schema:name">Abstract</h2>
 
-      <p id="abstract">We present MCP-over-SPARQL, a Model Context Protocol server for natural-language access to knowledge graphs. The server connects an MCP-capable LLM client to a SPARQL endpoint and exposes a small set of dedicated tools for schema overview, curated examples, knowledge graph strcuture discovery, entity reconciliation, and SPARQL execution. This provides all the necessary primitives for an LLM client to turn a natural language question into a SPARQL query, using correct identifiers from the knowledge graph. By grounding query construction in SHACL and resolving named entities against the identifiers actually used in the graph, the system reduces schema guessing and returns real data from the endpoint instead of model-generated text. We demonstrate the approach on the the Unique Interoperability Referential of Medical Specialties from the French e-health agency, and show how it supports controlled, schema-aware querying of domain-specific knowledge graphs.</p>
+      <p id="abstract">MCP-over-SPARQL is a Model Context Protocol server that provides tools enabling a client LLM to successfully write an execute a valid SPARQL query on a knowledge graph. The server connects an MCP-capable LLM client to a SPARQL endpoint together with other tools for retrieving an overview of the graph, curated query examples, and the detailled knowledge graph structure from a SHACL specification. In addition, it exposes a reconciliation function to retrieve entity URIs from a label and a type. This provides all the necessary primitives for an LLM client to turn a natural language question into a SPARQL query, using the correct graph structure, and with valid URI identifiers. The system reduces schema guessing and returns data from the endpoint. We demonstrate the approach on the the Unique Interoperability Referential of Medical Specialties (RUIM) from the French e-health agency, and show how it supports controlled, schema-aware querying of domain-specific knowledge graphs.</p>
 
     </div>
 </section>
@@ -53,9 +53,9 @@
 <div datatype="rdf:HTML" property="schema:description">
         <h2 property="schema:name">Introduction</h2>
 
-        <p>Knowledge graphs are sources of trustworthy structured data, but they are often difficult to query. Writing a correct <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.w3.org/TR/sparql11-query/">SPARQL</a> <span class="references">[<a href="#ref-1">1</a>]</span> query requires understanding the underlying schema, the available predicates, and the identifiers used in the graph. For users who are not familiar with SPARQL, this becomes a real obstacle when they want to turn an information need into a query and retrieve the corresponding data.</p>
+        <p>Knowledge graphs are sources of trustworthy structured data, but leveraging this data directly in <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.w3.org/TR/sparql11-query/">SPARQL</a> <span class="references">[<a href="#ref-1">1</a>]</span> requires understanding the underlying schema, the available predicates, and the identifiers used in the graph. For data publishers, making their knowledge graph query-able by AI is another dissemination channel to maximise its dissemination and reuse.</p>
 
-        <p>Large language models can help address this problem when they are connected to external tools through the <a property="schema:citation http://purl.org/spar/cito/cites" href="https://modelcontextprotocol.io">Model Context Protocol</a> <span class="references">[<a href="#ref-2">2</a>]</span>. In this demo, we present an MCP server driven by the <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.w3.org/TR/shacl/">SHACL</a> <span class="references">[<a href="#ref-3">3</a>]</span> specification of the underlying knowledge graph. The server exposes the structure of the graph through a small set of schema-grounded tools that let an MCP-capable client discover the schema, inspect relevant entities, reconcile named entities, and execute SPARQL queries.</p>
+        <p>Large Language Models (LLM) can query external sources when they are connected to external tools through the <a property="schema:citation http://purl.org/spar/cito/cites" href="https://modelcontextprotocol.io">Model Context Protocol</a> <span class="references">[<a href="#ref-2">2</a>]</span>. In this demo, we present an MCP server driven by a <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.w3.org/TR/shacl/">SHACL</a> <span class="references">[<a href="#ref-3">3</a>]</span> specification of the underlying knowledge graph. The server exposes the structure of the graph through a small set of schema-grounded tools that let an MCP-capable client discover the schema, inspect relevant types, reconcile named entities, and execute SPARQL queries.</p>
 
       </div>
 </section>
@@ -64,7 +64,7 @@
 <div datatype="rdf:HTML" property="schema:description">
         <h2 property="schema:name">System Architecture</h2>
 
-        <p id="architecture">MCP-over-SPARQL sits between an MCP-capable LLM client and a SPARQL endpoint. Rather than exposing a single opaque question-to-answer service, it decomposes natural-language querying into a small set of explicit tools, including a schema overview that summarizes the graph, curated few-shot examples that provide validated query patterns, node-shape discovery that returns the relevant SHACL definitions in detail for each one, entity reconciliation that maps user-provided labels to stable IRIs, and SPARQL execution that runs the final query. A lightweight healthcheck tool is also available to report server status and endpoint reachability. Figure 1 shows the overall architecture.</p>
+        <p id="architecture">MCP-over-SPARQL sits between an MCP-capable LLM client and a SPARQL endpoint. Rather than exposing only a SPARQL endpoint service, its exposes the tools depicted in Figure 1 below.</p>
 
         <figure id="fig-architecture">
 <img src="img/architecture.svg" alt="Architecture diagram: an MCP client (LLM) connects over stdio or HTTP to the MCP-over-SPARQL server, whose tools (schema overview, curated examples, node-shape discovery, entity reconciliation, SPARQL execution, and healthcheck) read the SHACL model, resolve entities through a reconciliation service, and execute queries against the SPARQL endpoint." />
@@ -121,6 +121,54 @@
 <div datatype="rdf:HTML" property="schema:description">
         <h2 property="schema:name">Demonstration</h2>
 
+        <p id="demonstration">The demo MCP-over-SPARQL server URL is <strong>https:/​/​services.sparnatural.eu/mcp/ruim-mcp</strong>. It exposes the structure of the <a property="schema:citation http://purl.org/spar/cito/cites" href="https://smt.esante.gouv.fr/fiche-ruim/">RUIM</a> <span class="references">[<a href="#ref-5">5</a>]</span>, with its <a property="schema:citation http://purl.org/spar/cito/cites" href="https://github.com/sparna-git/referentiel-medicaments/blob/main/shacl/RUIM-SHACL-instances.ttl">SHACL specification</a> <span class="references">[<a href="#ref-6">6</a>]</span>.</p>
+
+        <p>Using Claude Sonnet 4.6, low effort, with the request <em>“What are the generics of perindopril ?”</em> (<em>“Quels sont les génériques du périndopril ?”</em>), and after reading the tools from the MCP-over-SPARQL server, the AI follows this sequence:</p>
+
+        <ol>
+          <li>Calls <code>get_few_shots</code> to read example queries</li>
+          <li>Calls <code>discover_nodeshapes</code> with the shapes <code>med:GroupeGenerique</code> (<em>“generic drug grouping”</em>) and <code>med:SpecialitePharmaceutique</code> (<em>“medicinal product”</em>) and read their properties</li>
+          <li>Calls <code>reconcile_entities</code> with label <em>“périndopril”</em> and type <code>med:SpecialitePharmaceutique</code> - no result as “périndopril” is actually a Substance and not a medicinal product.</li>
+          <li>Calls <code>reconcile_entities</code> again, this time with type <code>med:Substance</code> - it returns 4 Substances</li>
+          <li>Then produces and executes the following SPARQL query</li>
+        </ol>
+
+        <pre><code>
+PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+PREFIX med: &lt;http://data.esante.gouv.fr/ansm/medicament/&gt;
+
+SELECT DISTINCT ?groupeLabel ?refLabel ?genLabel ?titulaire
+WHERE {
+  ?groupe rdf:type med:GroupeGenerique ;
+          rdfs:label ?groupeLabel .  
+  # Le groupe doit contenir au moins une spécialité à base de périndopril (en substance active)
+  {
+    ?groupe med:specialiteDeReference ?ref .
+    ?ref med:substanceActive &lt;http://data.esante.gouv.fr/ansm/medicament/Substance_09586&gt; .
+  } UNION {
+    ?groupe med:specialiteDeReference ?ref .
+    ?ref med:substanceActive &lt;http://data.esante.gouv.fr/ansm/medicament/Substance_46744&gt; .
+  } UNION {
+    ?groupe med:specialiteDeReference ?ref .
+    ?ref med:substanceActive &lt;http://data.esante.gouv.fr/ansm/medicament/Substance_52431&gt; .
+  } UNION {
+    ?groupe med:specialiteDeReference ?ref .
+    ?ref med:substanceActive &lt;http://data.esante.gouv.fr/ansm/medicament/Substance_69916&gt; .
+  }  
+  OPTIONAL { ?ref rdfs:label ?refLabel }
+  
+  ?groupe med:specialiteGenerique ?gen .
+  ?gen rdfs:label ?genLabel .
+  OPTIONAL { ?gen med:titulaireCourant ?tit . ?tit rdfs:label ?titulaire }
+}
+ORDER BY ?groupeLabel ?genLabel
+LIMIT 100
+</code></pre>
+        <p><br /></p>
+
+        <p>Note how the AI was able to overcome two ambiguities with the user query : 1/ it asking for generic drugs but using the name of a substance and not a product 2/ the name of the substance was itself ambiguous. Note also how the query is correct at the first iteration, and how extra properties, such as human-readable labels and the manufacturer, have been added, although not explicitely requested.
+We also note that in this case, the tool <code>schema_overview</code> was not called by the AI. The correct shapes identifiers are already listed as enum in the tool description of <code>discover_nodeshape</code>, hence the AI did not felt the necessity to call the overview.</p>
       </div>
 </section>
 
@@ -135,6 +183,7 @@
 <div datatype="rdf:HTML" property="schema:description">
         <h2 property="schema:name">Ethics and Environmental Footprint</h2>
 
+        <p id="ethics">It must be recalled that the AI systems used are responsible of an increase in the demand for electricity, water, and rare materials. Moreover, The providers of these systems do not disclose the content of their models, the source of the data used, or the work done in poor countries to make it usable.</p>
       </div>
 </section>
 
@@ -142,6 +191,7 @@
 <div datatype="rdf:HTML" property="schema:description">
         <h2 property="schema:name">Declaration on Generative AI</h2>
 
+        <p id="genai">The authors have not employed any Generative AI tools for the writing of this submission.</p>
       </div>
 </section>
 
@@ -158,6 +208,10 @@
   <dd resource="https://www.w3.org/TR/shacl/" typeof="schema:CreativeWork">Knublauch, H., Kontokostas, D.: Shapes Constraint Language (SHACL). <a href="https://www.w3.org/TR/shacl/">https:/​/​www.w3.org/TR/shacl/</a> (2017).</dd>
   <dt id="ref-4">[4]</dt>
   <dd resource="https://www.w3.org/community/reports/reconciliation/CG-FINAL-specs-0.2-20230410/" typeof="schema:CreativeWork">W3C Entity Reconciliation Community Group: Reconciliation Service API, Version 0.2. <a href="https://www.w3.org/community/reports/reconciliation/CG-FINAL-specs-0.2-20230410/">https:/​/​www.w3.org/community/reports/reconciliation/CG-FINAL-specs-0.2-20230410/</a> (2023).</dd>
+  <dt id="ref-5">[5]</dt>
+  <dd resource="https://smt.esante.gouv.fr/fiche-ruim/" typeof="schema:CreativeWork">Agence Nationale de Sécurité du Médicament, Agence du Numérique en Santé: RUIM: Référentiel Unique d’Interopérabilité du Médicament. <a href="https://smt.esante.gouv.fr/fiche-ruim/">https:/​/​smt.esante.gouv.fr/fiche-ruim/</a> (2024).</dd>
+  <dt id="ref-6">[6]</dt>
+  <dd resource="https://github.com/sparna-git/referentiel-medicaments/blob/main/shacl/RUIM-SHACL-instances.ttl" typeof="schema:CreativeWork"><a href="https://github.com/sparna-git/referentiel-medicaments/blob/main/shacl/RUIM-SHACL-instances.ttl">https:/​/​github.com/sparna-git/referentiel-medicaments/blob/main/shacl/RUIM-SHACL-instances.ttl</a></dd>
 </dl>
 </section>
 </footer>
