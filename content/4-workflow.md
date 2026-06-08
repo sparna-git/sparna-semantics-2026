@@ -5,7 +5,7 @@
 In the best case, the client turns a natural-language question into a correct SPARQL query by following the expected multi-step workflow shown in Figure 2, instead of issuing a single black-box call.
 
 <figure id="fig-workflow">
-<img src="img/squence1.png" alt="Sequence diagram: a natural-language question goes from the user to the MCP client, which calls the server's tools in order — schema_overview and discover_nodeshapes read the SHACL model, reconcile_entities returns entity IRIs, and query_sparql executes against the SPARQL endpoint — and real-data results are returned to the user.">
+<img src="img/sequence2.png" alt="Sequence diagram: a natural-language question goes from the user to the MCP client, which calls the server's tools in order — schema_overview and discover_nodeshapes read the SHACL model, reconcile_entities returns entity IRIs, and query_sparql executes against the SPARQL endpoint — and real-data results are returned to the user.">
 <figcaption markdown="block">
 Lifecycle of a single query: the MCP client orchestrates the server's tools to turn a natural-language question into a query executed against the endpoint, returning real data.
 </figcaption>
