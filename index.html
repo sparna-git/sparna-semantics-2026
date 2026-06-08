@@ -11,7 +11,7 @@
   <meta name="citation_author" content="Tarek Bouzelat" />
   <meta name="citation_author" content="Thomas Francart" />
   
-  <meta name="citation_publication_date" content="2026/06/05" />
+  <meta name="citation_publication_date" content="2026/06/08" />
 </head>
 
 <body prefix="dctypes: http://purl.org/dc/dcmitype/ pimspace: http://www.w3.org/ns/pim/space# rsa: http://www.w3.org/ns/auth/rsa# cert: http://www.w3.org/ns/auth/cert# wgs: http://www.w3.org/2003/01/geo/wgs84_pos# biblio: http://purl.org/net/biblio# bibo: http://purl.org/ontology/bibo/ book: http://purl.org/NET/book/vocab# ov: http://open.vocab.org/terms/ doap: http://usefulinc.com/ns/doap# dbr: http://dbpedia.org/resource/ dbp: http://dbpedia.org/property/ sio: http://semanticscience.org/resource/ opmw: http://www.opmw.org/ontology/ deo: http://purl.org/spar/deo/ doco: http://purl.org/spar/doco/ cito: http://purl.org/spar/cito/ fabio: http://purl.org/spar/fabio/ solid: http://www.w3.org/ns/solid/terms# acl: http://www.w3.org/ns/auth/acl# dio: https://w3id.org/dio# lsc: http://linkedscience.org/lsc/ns#" typeof="schema:CreativeWork sioc:Post prov:Entity lsc:Research">
@@ -67,7 +67,7 @@
         <p id="architecture">MCP-over-SPARQL sits between an MCP-capable LLM client and a SPARQL endpoint. Rather than exposing only a SPARQL endpoint service, its exposes the tools depicted in Figure 1 below.</p>
 
         <figure id="fig-architecture">
-<img src="img/architecture.svg" alt="Architecture diagram: an MCP client (LLM) connects over stdio or HTTP to the MCP-over-SPARQL server, whose tools (schema overview, curated examples, node-shape discovery, entity reconciliation, SPARQL execution, and healthcheck) read the SHACL model, resolve entities through a reconciliation service, and execute queries against the SPARQL endpoint." />
+<img src="img/architecture1.svg" alt="Architecture diagram: an MCP client (LLM) connects over stdio or HTTP to the MCP-over-SPARQL server, whose tools (schema overview, curated examples, node-shape discovery, entity reconciliation, SPARQL execution, and healthcheck) read the SHACL model, resolve entities through a reconciliation service, and execute queries against the SPARQL endpoint." />
 <figcaption>
             <p><span class="label">Fig. 1:</span> Architecture of MCP-over-SPARQL: an MCP client (LLM) drives the server’s tools, which are grounded in a SHACL model of the data, resolve entities through a reconciliation service, and execute queries against the project’s SPARQL endpoint.</p>
           </figcaption>
@@ -82,17 +82,17 @@
 <div datatype="rdf:HTML" property="schema:description">
         <h2 property="schema:name">MCP Tools description</h2>
 
-        <p id="tools-description">The schema-overview tool derives a high-level synthesis of the graph… it returns markdown… it lists… The schema overview is deliberately incomplete, it acts as a high-level table of contents that is not sufficient to write a correct query.</p>
+        <p id="tools-description">The schema overview tool derives a high-level synthesis of the graph and returns it as markdown listing the classes it contains. It is deliberately incomplete and acts as a high-level table of contents, not sufficient on its own to write a correct query.</p>
 
-        <p>The graph structure discovery tool returns the detailed definitions of the shapes relevant to a question…. it also reads the SHACL file and returns a detailled list of properties for each kind of entity in the graph. For each property, the following information are provided: …</p>
+        <p>The discover nodeshapes tool returns the detailed definitions of the shapes relevant to a question. It reads the SHACL file and returns a detailed list of properties for each kind of entity in the graph. For each property, it provides details such as its path, datatype, and cardinality.</p>
 
         <p>Beyond structural constraints, each shape can also carry natural-language guidance through sh:agentInstruction, a non-validating feature introduced in SHACL 1.2. When the client discovers a shape, these instructions are returned alongside its predicates and cardinalities, allowing the data publisher to guide how a class or property should be used, for example by indicating which identifier to prefer or how to interpret a relation. The schema therefore conveys not only the structure of the graph, but also human-authored hints for the agent.</p>
 
-        <p>The example tools…</p>
+        <p>The get few shots tool returns curated, validated query patterns that serve as few-shot examples for the graph.</p>
 
-        <p>The entity reconciliation MCP tool relies on an underlying service that conforms with the <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.w3.org/community/reports/reconciliation/CG-FINAL-specs-0.2-20230410/">Reconciliation Service API Specification</a> <span class="references">[<a href="#ref-4">4</a>]</span>. The reconciliation tool takes 2 input parameters : a label to search, and the URI identifier of the shape of the entity to lookup. It returns a list of entities, each with a score. The actual implementation of this service can be either a plain SPARQL-based search (not efficient and not suitable for plain-text lookups), proprietary full-text indexing capabilities of the triplestore, an existing API, or a custom-built search index, filled with the labels of the entities from the graph. Splitting</p>
+        <p>The reconcile entities tool relies on an underlying service that conforms to the <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.w3.org/community/reports/reconciliation/CG-FINAL-specs-0.2-20230410/">Reconciliation Service API Specification</a> <span class="references">[<a href="#ref-4">4</a>]</span>. It takes two input parameters, a label to search and the URI of the entity’s shape to look up, and returns a list of entities, each with a score. This service can be implemented as a plain SPARQL-based search (inefficient and unsuitable for plain-text lookups), the triplestore’s proprietary full-text indexing, an existing API, or a custom-built search index filled with the labels of the graph’s entities.</p>
 
-        <p>Finally, the SPARQL tool simply takes a SPARQL query as input, and returns the result in the XXXX format.</p>
+        <p>Finally, the query sparql tool simply takes a SPARQL query as input and returns the result in the appropriate format.</p>
 
       </div>
 </section>
@@ -101,7 +101,7 @@
 <div datatype="rdf:HTML" property="schema:description">
         <h2 property="schema:name">Schema-Grounded Query Workflow</h2>
 
-        <p id="workflow">To turn a natural-language question into a correct SPARQL query, the client follows an explicit multi-step workflow rather than relying on a single black-box service. It first requests a high-level schema overview, then retrieves a few curated example queries, discovers the node shapes relevant to the question, reconciles any named entities to real IRIs, and finally builds and executes the query. Splitting the task this way keeps each step explicit and inspectable. Figure 2 illustrates this lifecycle for a single request.</p>
+        <p id="workflow">In the best case, the client turns a natural-language question into a correct SPARQL query by following the expected multi-step workflow shown in Figure 2, instead of issuing a single black-box call.</p>
 
         <figure id="fig-workflow">
 <img src="img/sequence.svg" alt="Sequence diagram: a natural-language question goes from the user to the MCP client, which calls the server's tools in order — schema_overview and discover_nodeshapes read the SHACL model, reconcile_entities returns entity IRIs, and query_sparql executes against the SPARQL endpoint — and real-data results are returned to the user." />
@@ -110,9 +110,7 @@
           </figcaption>
 </figure>
 
-        <p>This ordering is enforced by the tools’ own descriptions, which instruct the client to go through discovery first and never to guess predicates or paths from prior knowledge.</p>
-
-        <p>When the question mentions named entities, they are reconciled to the IRIs actually used in the graph before the final query is assembled, so the query targets exact resources rather than relying on fragile label matching. The query is then executed against the endpoint, and the user receives its result, real data drawn from the graph, produced by a query the client could not have written from its prior knowledge alone.</p>
+        <p>This order is not enforced, however. The tool descriptions recommend discovering the schema first and never guessing predicates or paths from prior knowledge, but the client stays free to call the tools in whatever order it needs, using only the ones relevant to the question.</p>
 
       </div>
 </section>
