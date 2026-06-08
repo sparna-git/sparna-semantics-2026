@@ -8,7 +8,7 @@ The discover nodeshapes tool returns the detailed definitions of the shapes rele
 
 Beyond structural constraints, each shape can also carry natural-language guidance through sh:agentInstruction, a non-validating feature introduced in SHACL 1.2. When the client discovers a shape, these instructions are returned alongside its predicates and cardinalities, allowing the data publisher to guide how a class or property should be used, for example by indicating which identifier to prefer or how to interpret a relation. The schema therefore conveys not only the structure of the graph, but also human-authored hints for the agent.
 
-The get few shots tool returns curated, validated examples for the graph, each pairing a natural-language question with its expected SPARQL query.
+The get few shots tool returns validated examples for the graph each pairing a natural-language question with its expected SPARQL query.
 
 The reconcile entities tool relies on an underlying service that conforms to the [Reconciliation Service API Specification](cite:cites reconciliationapi). It takes two input parameters, a label to search and the URI of the entity's shape to look up, and returns a list of entities, each with a score. This service can be implemented as a plain SPARQL-based search (inefficient and unsuitable for plain-text lookups), the triplestore's proprietary full-text indexing, an existing API, or a custom-built search index filled with the labels of the graph's entities.
 
