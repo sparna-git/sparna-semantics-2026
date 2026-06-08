@@ -5,7 +5,7 @@
 MCP-over-SPARQL sits between an MCP-capable LLM client and a SPARQL endpoint. Rather than exposing only a SPARQL endpoint service, its exposes the tools depicted in Figure 1 below.
 
 <figure id="fig-architecture">
-<img src="img/architecture1.svg" alt="Architecture diagram: an MCP client (LLM) connects over stdio or HTTP to the MCP-over-SPARQL server, whose tools (schema overview, curated examples, node-shape discovery, entity reconciliation, SPARQL execution, and healthcheck) read the SHACL model, resolve entities through a reconciliation service, and execute queries against the SPARQL endpoint.">
+<img src="img/architecture11.png" alt="Architecture diagram: an MCP client (LLM) connects over stdio or HTTP to the MCP-over-SPARQL server, whose tools (schema overview, curated examples, node-shape discovery, entity reconciliation, SPARQL execution, and healthcheck) read the SHACL model, resolve entities through a reconciliation service, and execute queries against the SPARQL endpoint.">
 <figcaption markdown="block">
 Architecture of MCP-over-SPARQL: an MCP client (LLM) drives the server's tools, which are grounded in a SHACL model of the data, resolve entities through a reconciliation service, and execute queries against the project's SPARQL endpoint.
 </figcaption>
