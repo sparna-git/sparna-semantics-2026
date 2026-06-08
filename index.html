@@ -67,7 +67,7 @@
         <p id="architecture">MCP-over-SPARQL sits between an MCP-capable LLM client and a SPARQL endpoint. Rather than exposing only a SPARQL endpoint service, its exposes the tools depicted in Figure 1 below.</p>
 
         <figure id="fig-architecture">
-<img src="img/architecture1.svg" alt="Architecture diagram: an MCP client (LLM) connects over stdio or HTTP to the MCP-over-SPARQL server, whose tools (schema overview, curated examples, node-shape discovery, entity reconciliation, SPARQL execution, and healthcheck) read the SHACL model, resolve entities through a reconciliation service, and execute queries against the SPARQL endpoint." />
+<img src="img/architecture11.png" alt="Architecture diagram: an MCP client (LLM) connects over stdio or HTTP to the MCP-over-SPARQL server, whose tools (schema overview, curated examples, node-shape discovery, entity reconciliation, SPARQL execution, and healthcheck) read the SHACL model, resolve entities through a reconciliation service, and execute queries against the SPARQL endpoint." />
 <figcaption>
             <p><span class="label">Fig. 1:</span> Architecture of MCP-over-SPARQL: an MCP client (LLM) drives the server’s tools, which are grounded in a SHACL model of the data, resolve entities through a reconciliation service, and execute queries against the project’s SPARQL endpoint.</p>
           </figcaption>
@@ -104,7 +104,7 @@
         <p id="workflow">In the best case, the client turns a natural-language question into a correct SPARQL query by following the expected multi-step workflow shown in Figure 2, instead of issuing a single black-box call.</p>
 
         <figure id="fig-workflow">
-<img src="img/sequence.svg" alt="Sequence diagram: a natural-language question goes from the user to the MCP client, which calls the server's tools in order — schema_overview and discover_nodeshapes read the SHACL model, reconcile_entities returns entity IRIs, and query_sparql executes against the SPARQL endpoint — and real-data results are returned to the user." />
+<img src="img/squence1.png" alt="Sequence diagram: a natural-language question goes from the user to the MCP client, which calls the server's tools in order — schema_overview and discover_nodeshapes read the SHACL model, reconcile_entities returns entity IRIs, and query_sparql executes against the SPARQL endpoint — and real-data results are returned to the user." />
 <figcaption>
             <p><span class="label">Fig. 2:</span> Lifecycle of a single query: the MCP client orchestrates the server’s tools to turn a natural-language question into a query executed against the endpoint, returning real data.</p>
           </figcaption>
