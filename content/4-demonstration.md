@@ -2,7 +2,7 @@
 
 {:#demonstration}
 
-An online demo of MCP-over-SPARQL is **https://services.sparnatural.eu/mcp/ruim-mcp**. It exposes the structure of the [RUIM](cite:cites ruim), with its [SHACL specification](cite:cites ruimshacl). It should be noted that the SHACL specification contains extensive documentation of each entity and properties. 
+An online demo of MCP-over-SPARQL is **https://services.sparnatural.eu/mcp/ruim-mcp**. It exposes the structure of the [Standardized Drug Nomenclature of France e-health agency](cite:cites ruim), with its [SHACL specification](cite:cites ruimshacl). It should be noted that the SHACL specification contains extensive documentation of each entity and properties. 
 
 Using Claude Sonnet 4.6, low effort, with the request _"What are the generics of perindopril ?"_ (_"Quels sont les génériques du périndopril ?"_), and after reading the tools from the MCP-over-SPARQL server, the AI follows this sequence:
 
