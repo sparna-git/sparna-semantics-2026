@@ -110,54 +110,43 @@
 <div datatype="rdf:HTML" property="schema:description">
         <h2 property="schema:name">Demonstration</h2>
 
-        <p id="demonstration">An online demo of MCP-over-SPARQL is <strong>https:/​/​services.sparnatural.eu/mcp/ruim-mcp</strong>. It exposes the structure of the Standardized Drug Nomenclature of France e-health agency <span class="references">[<a href="#ref-6">6</a>]</span>, with its <a property="schema:citation http://purl.org/spar/cito/cites" href="https://github.com/sparna-git/referentiel-medicaments/blob/main/shacl/RUIM-SHACL-instances.ttl">SHACL specification</a> <span class="references">[<a href="#ref-7">7</a>]</span>. It should be noted that the SHACL specification contains extensive documentation of each entity and properties.</p>
+        <p id="demonstration">An online demo of MCP-over-SPARQL is <strong>https:/​/​services.sparnatural.eu/mcp/ruim-mcp</strong>. It exposes the structure of the Standardized Drug Nomenclature of France e-health agency (RUIM) <span class="references">[<a href="#ref-6">6</a>]</span>, with its <a property="schema:citation http://purl.org/spar/cito/cites" href="https://github.com/sparna-git/referentiel-medicaments/blob/main/shacl/RUIM-SHACL-instances.ttl">SHACL specification</a> <span class="references">[<a href="#ref-7">7</a>]</span>. It should be noted that the SHACL specification contains extensive documentation of each entity and properties. The SPARQL queries below can be tested against the <a property="schema:citation http://purl.org/spar/cito/cites" href="https://smt.esante.gouv.fr/sparql/">online RUIM endpoint</a> <span class="references">[<a href="#ref-8">8</a>]</span>.</p>
+
+        <p>Using Mistral Vibe (Chat) with the query <em>“What does bi profenid contains ?”</em> (<em>“Que contient le bi profénid ?”</em>), the AI follows this sequence:</p>
+
+        <ol>
+          <li>Calls <code>discover_nodeshapes</code> with the shapes <code>med:SpecialitePharmaceutique</code>, <code>med:Element</code> and <code>med:Substance</code> (<em>“medicinal product”</em>, <em>“manufactured item”</em> and <em>“substance”</em>) to read their properties</li>
+          <li>Calls <code>reconcile_entities</code> with “bi profenid” on <code>med:SpecialitePharmaceutique</code>, and retrieves its URI (<code>...SpecialitePharmaceutique_61165486</code>)</li>
+          <li>Generates and executes the following query, to retrive the correct answer (“Ketoprofène”):</li>
+        </ol>
+
+        <pre><code>
+PREFIX med: &lt;http://data.esante.gouv.fr/ansm/medicament/&gt;
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+
+SELECT DISTINCT ?substance ?substance_label WHERE {
+  &lt;http://data.esante.gouv.fr/ansm/medicament/SpecialitePharmaceutique_61165486&gt; med:substanceActive ?substance .
+  ?substance rdfs:label ?substance_label .
+  FILTER(LANG(?substance_label) = 'fr')
+}
+LIMIT 20
+</code></pre>
+        <p><br /></p>
+
+        <p>We note that the tool <code>schema_overview</code> was not called by the AI. The allowable shapes identifiers are already listed as enum in the input schema of the <code>discover_nodeshape</code> tool, hence the AI did not felt the necessity to call the overview.</p>
 
         <p>Using Claude Sonnet 4.6, low effort, with the request <em>“What are the generics of perindopril ?”</em> (<em>“Quels sont les génériques du périndopril ?”</em>), and after reading the tools from the MCP-over-SPARQL server, the AI follows this sequence:</p>
 
         <ol>
           <li>Calls <code>get_few_shots</code> to read example queries</li>
-          <li>Calls <code>discover_nodeshapes</code> with the shapes <code>med:GroupeGenerique</code> (<em>“generic drug grouping”</em>) and <code>med:SpecialitePharmaceutique</code> (<em>“medicinal product”</em>) and read their properties</li>
+          <li>Calls <code>discover_nodeshapes</code> with the shapes <code>med:GroupeGenerique</code> (<em>“generic drug grouping”</em>) and <code>med:SpecialitePharmaceutique</code> (<em>“medicinal product”</em>) to read their properties</li>
           <li>Calls <code>reconcile_entities</code> with label <em>“périndopril”</em> and type <code>med:SpecialitePharmaceutique</code> - no result as “périndopril” is actually a Substance and not a medicinal product.</li>
           <li>Calls <code>reconcile_entities</code> again, this time with type <code>med:Substance</code> - it returns 4 Substances</li>
-          <li>Then produces and executes the following SPARQL query</li>
+          <li>Then produces and executes a (correct) SPARQL query containing the 4 Substances URI, the drug groupings and the marketing authorization holder of each drug (although not requested)</li>
         </ol>
 
-        <pre><code>
-PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
-PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
-PREFIX med: &lt;http://data.esante.gouv.fr/ansm/medicament/&gt;
+        <p>Note how the AI was able to overcome two ambiguities with the original query : 1/ it asks for generic drugs but using the name of a substance and not a product 2/ the name of the substance is itself ambiguous. Note also how the query is correct at the first iteration, and contains human-readable labels and marketing authorization holder.</p>
 
-SELECT DISTINCT ?groupeLabel ?refLabel ?genLabel ?titulaire
-WHERE {
-  ?groupe rdf:type med:GroupeGenerique ;
-          rdfs:label ?groupeLabel .  
-  # Le groupe doit contenir au moins une spécialité à base de périndopril (en substance active)
-  {
-    ?groupe med:specialiteDeReference ?ref .
-    ?ref med:substanceActive &lt;http://data.esante.gouv.fr/ansm/medicament/Substance_09586&gt; .
-  } UNION {
-    ?groupe med:specialiteDeReference ?ref .
-    ?ref med:substanceActive &lt;http://data.esante.gouv.fr/ansm/medicament/Substance_46744&gt; .
-  } UNION {
-    ?groupe med:specialiteDeReference ?ref .
-    ?ref med:substanceActive &lt;http://data.esante.gouv.fr/ansm/medicament/Substance_52431&gt; .
-  } UNION {
-    ?groupe med:specialiteDeReference ?ref .
-    ?ref med:substanceActive &lt;http://data.esante.gouv.fr/ansm/medicament/Substance_69916&gt; .
-  }  
-  OPTIONAL { ?ref rdfs:label ?refLabel }
-  
-  ?groupe med:specialiteGenerique ?gen .
-  ?gen rdfs:label ?genLabel .
-  OPTIONAL { ?gen med:titulaireCourant ?tit . ?tit rdfs:label ?titulaire }
-}
-ORDER BY ?groupeLabel ?genLabel
-LIMIT 100
-</code></pre>
-        <p><br /></p>
-
-        <p>Note how the AI was able to overcome two ambiguities with the original query : 1/ it asks for generic drugs but using the name of a substance and not a product 2/ the name of the substance is itself ambiguous. Note also how the query is correct at the first iteration, and how extra properties, such as human-readable labels and the manufacturer, have been added, although not explicitely requested.
-We also note that in this case, the tool <code>schema_overview</code> was not called by the AI. The allowabled shapes identifiers are already listed as enum in the input schema of the <code>discover_nodeshape</code> tool, hence the AI did not felt the necessity to call the overview.</p>
       </div>
 </section>
 
@@ -203,6 +192,8 @@ We also note that in this case, the tool <code>schema_overview</code> was not ca
   <dd resource="https://dx.doi.org/10.3233/SHTI250301" typeof="schema:Article">Development of a standardized drug nomenclature in France. Stud Health Technol Inform. 327, 198–202 (2025). doi:10.3233/SHTI250301</dd>
   <dt id="ref-7">[7]</dt>
   <dd resource="https://github.com/sparna-git/referentiel-medicaments/blob/main/shacl/RUIM-SHACL-instances.ttl" typeof="schema:CreativeWork"><a href="https://github.com/sparna-git/referentiel-medicaments/blob/main/shacl/RUIM-SHACL-instances.ttl">https:/​/​github.com/sparna-git/referentiel-medicaments/blob/main/shacl/RUIM-SHACL-instances.ttl</a></dd>
+  <dt id="ref-8">[8]</dt>
+  <dd resource="https://smt.esante.gouv.fr/sparql/" typeof="schema:CreativeWork"><a href="https://smt.esante.gouv.fr/sparql/">https:/​/​smt.esante.gouv.fr/sparql/</a></dd>
 </dl>
 </section>
 </footer>
