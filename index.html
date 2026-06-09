@@ -73,16 +73,7 @@
           </figcaption>
 </figure>
 
-        <p>The server can be accessed through two transports. A local stdio transport is used for development, testing, and local use, while a Streamable HTTP transport serves remote clients. The server can be configured per “project”. Each project corresponds to a specific knowledge graph, with its own SHACL model and SPARQL endpoint, and is exposed as a dedicated MCP server. A unique server deployment can thus expose multiple knowledge graphs through MCP.</p>
-
-      </div>
-</section>
-
-  <section id="mcp-tools-description" inlist="" rel="schema:hasPart" resource="#mcp-tools-description">
-<div datatype="rdf:HTML" property="schema:description">
-        <h2 property="schema:name">MCP Tools description</h2>
-
-        <p id="tools-description">The <code>schema_overview</code> tool derives a high-level synthesis of the graph and returns it as markdown listing the classes it contains along with some additional information about each of them. It is deliberately incomplete and acts as a high-level table of contents, not sufficient on its own to write a correct query.</p>
+        <p>The <code>schema_overview</code> tool derives a high-level synthesis of the graph and returns it as markdown listing the classes it contains along with some additional information about each of them. It is deliberately incomplete and acts as a high-level table of contents, not sufficient on its own to write a correct query. The schema overview also includes a synthetic description of expected query use-cases, with, for each use-case, the corresponding class to use, with expected joins to/from other classes.</p>
 
         <p>The <code>discover_nodeshapes</code> tool returns detailed definitions of shapes/classes. It reads the SHACL file and returns a detailed list of properties for each requested shape. For each property, it provides a label and description and details such as its path, datatype, and cardinality. Beyond structural constraints, each shape can also carry natural-language guidance through <code>sh:agentInstruction</code>, a non-validating feature introduced in SHACL 1.2. When the client discovers a shape, these instructions are returned alongside its predicates and cardinalities, allowing the data publisher to guide how a class or property should be used, for example by indicating which identifier to prefer or how to interpret a relation. The schema therefore conveys not only the structure of the graph, but also human-authored hints for the agent.</p>
 
@@ -91,6 +82,8 @@
         <p>The <code>reconcile_entities</code> tool relies on an underlying service that conforms to the <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.w3.org/community/reports/reconciliation/CG-FINAL-specs-0.2-20230410/">Reconciliation Service API Specification</a> <span class="references">[<a href="#ref-5">5</a>]</span>. It takes two input parameters, a label to search and the URI of the entity’s shape to look up, and returns a list of entities, each with a score. This service can be implemented, depending on the project, as a plain SPARQL-based search (inefficient and unsuitable for plain-text lookups), the triplestore’s proprietary full-text indexing, an existing API, or a custom-built search index filled with the labels of the graph’s entities.</p>
 
         <p>Finally, the <code>query_sparql</code> tool simply takes a SPARQL query as input and returns the result in <code>application/sparql-results+json</code>.</p>
+
+        <p>The server can be accessed either locally or remotely. It can be configured per “project”, each corresponding to a specific knowledge graph, with its own SHACL model and SPARQL endpoint, and exposed as a dedicated set of MCP tools. A unique server deployment can thus expose multiple knowledge graphs through MCP.</p>
 
       </div>
 </section>
@@ -117,7 +110,7 @@
 <div datatype="rdf:HTML" property="schema:description">
         <h2 property="schema:name">Demonstration</h2>
 
-        <p id="demonstration">An online demo of MCP-over-SPARQL is <strong>https:/​/​services.sparnatural.eu/mcp/ruim-mcp</strong>. It exposes the structure of the RUIM <span class="references">[<a href="#ref-6">6</a>]</span>, with its <a property="schema:citation http://purl.org/spar/cito/cites" href="https://github.com/sparna-git/referentiel-medicaments/blob/main/shacl/RUIM-SHACL-instances.ttl">SHACL specification</a> <span class="references">[<a href="#ref-7">7</a>]</span>. It should be noted that the SHACL specification contains extensive documentation of each entity and properties.</p>
+        <p id="demonstration">An online demo of MCP-over-SPARQL is <strong>https:/​/​services.sparnatural.eu/mcp/ruim-mcp</strong>. It exposes the structure of the Standardized Drug Nomenclature of France e-health agency <span class="references">[<a href="#ref-6">6</a>]</span>, with its <a property="schema:citation http://purl.org/spar/cito/cites" href="https://github.com/sparna-git/referentiel-medicaments/blob/main/shacl/RUIM-SHACL-instances.ttl">SHACL specification</a> <span class="references">[<a href="#ref-7">7</a>]</span>. It should be noted that the SHACL specification contains extensive documentation of each entity and properties.</p>
 
         <p>Using Claude Sonnet 4.6, low effort, with the request <em>“What are the generics of perindopril ?”</em> (<em>“Quels sont les génériques du périndopril ?”</em>), and after reading the tools from the MCP-over-SPARQL server, the AI follows this sequence:</p>
 
