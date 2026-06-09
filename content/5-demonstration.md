@@ -2,7 +2,7 @@
 
 {:#demonstration}
 
-The demo MCP-over-SPARQL server URL is **https://services.sparnatural.eu/mcp/ruim-mcp**. It exposes the structure of the [RUIM](cite:cites ruim), with its [SHACL specification](cite:cites ruimshacl).  
+An online demo of MCP-over-SPARQL is **https://services.sparnatural.eu/mcp/ruim-mcp**. It exposes the structure of the [RUIM](cite:cites ruim), with its [SHACL specification](cite:cites ruimshacl). It should be noted that the SHACL specification contains extensive documentation of each entity and properties. 
 
 Using Claude Sonnet 4.6, low effort, with the request _"What are the generics of perindopril ?"_ (_"Quels sont les génériques du périndopril ?"_), and after reading the tools from the MCP-over-SPARQL server, the AI follows this sequence:
 
@@ -47,5 +47,5 @@ LIMIT 100
 </code></pre><br/>
 
 
-Note how the AI was able to overcome two ambiguities with the user query : 1/ it asking for generic drugs but using the name of a substance and not a product 2/ the name of the substance was itself ambiguous. Note also how the query is correct at the first iteration, and how extra properties, such as human-readable labels and the manufacturer, have been added, although not explicitely requested.
-We also note that in this case, the tool `schema_overview` was not called by the AI. The correct shapes identifiers are already listed as enum in the tool description of `discover_nodeshape`, hence the AI did not felt the necessity to call the overview.
+Note how the AI was able to overcome two ambiguities with the original query : 1/ it asks for generic drugs but using the name of a substance and not a product 2/ the name of the substance is itself ambiguous. Note also how the query is correct at the first iteration, and how extra properties, such as human-readable labels and the manufacturer, have been added, although not explicitely requested.
+We also note that in this case, the tool `schema_overview` was not called by the AI. The allowabled shapes identifiers are already listed as enum in the input schema of the `discover_nodeshape` tool, hence the AI did not felt the necessity to call the overview.
