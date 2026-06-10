@@ -2,7 +2,7 @@
 
 {:#demonstration}
 
-An online prototype of MCP-over-SPARQL can be tested at **https://services.sparnatural.eu/mcp/ruim-mcp**. A [2 minutes video](cite:cites demovideo) is also available. The prototype exposes the structure of the [Standardized Drug Nomenclature of France e-health agency (RUIM)](cite:cites ruim), with its [SHACL specification](cite:cites ruimshacl), and its [online SPARQL endpoint](cite:cites ruimendpoint). The SHACL specification contains extensive documentation of each entity and properties.
+An online prototype of MCP-over-SPARQL can be tested at **https://services.sparnatural.eu/mcp/ruim-mcp**. A [2 minutes video](cite:cites demovideo) shows how to connect it in an AI client. The prototype exposes the structure of the [Standardized Drug Nomenclature of France e-health agency (RUIM)](cite:cites ruim), with its [SHACL specification](cite:cites ruimshacl), and its [online SPARQL endpoint](cite:cites ruimendpoint). The SHACL specification contains extensive documentation of each entity and properties.
 
 Using Mistral Vibe (Chat) with the query _"What does bi profenid contains ?"_ (_"Que contient le bi profénid ?"_), the AI follows this sequence:
 
