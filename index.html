@@ -8,10 +8,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   
   <meta name="citation_title" content="MCP-over-SPARQL : Giving AI the tools to query knowledge graphs">
-  <meta name="citation_author" content="Tarek Bouzelat" />
   <meta name="citation_author" content="Thomas Francart" />
+  <meta name="citation_author" content="Tarek Bouzelat" />
+  <meta name="citation_author" content="Badisse Dahamna" />
+  <meta name="citation_author" content="Flavien Disson" />
+  <meta name="citation_author" content="Romain Lelong" />
+  <meta name="citation_author" content="Catherine Letord" />
+  <meta name="citation_author" content="Stéfan J. Darmoni" />
   
-  <meta name="citation_publication_date" content="2026/06/09" />
+  <meta name="citation_publication_date" content="2026/06/10" />
 </head>
 
 <body prefix="dctypes: http://purl.org/dc/dcmitype/ pimspace: http://www.w3.org/ns/pim/space# rsa: http://www.w3.org/ns/auth/rsa# cert: http://www.w3.org/ns/auth/cert# wgs: http://www.w3.org/2003/01/geo/wgs84_pos# biblio: http://purl.org/net/biblio# bibo: http://purl.org/ontology/bibo/ book: http://purl.org/NET/book/vocab# ov: http://open.vocab.org/terms/ doap: http://usefulinc.com/ns/doap# dbr: http://dbpedia.org/resource/ dbp: http://dbpedia.org/property/ sio: http://semanticscience.org/resource/ opmw: http://www.opmw.org/ontology/ deo: http://purl.org/spar/deo/ doco: http://purl.org/spar/doco/ cito: http://purl.org/spar/cito/ fabio: http://purl.org/spar/fabio/ solid: http://www.w3.org/ns/solid/terms# acl: http://www.w3.org/ns/auth/acl# dio: https://w3id.org/dio# lsc: http://linkedscience.org/lsc/ns#" typeof="schema:CreativeWork sioc:Post prov:Entity lsc:Research">
@@ -19,12 +24,18 @@
   <h1 id="mcp-over-sparql--giving-ai-the-tools-to-query-knowledge-graphs">MCP-over-SPARQL : Giving AI the tools to query knowledge graphs</h1>
 
   <ul id="authors">
-    <li><a id="author-name" rev="lsc:participatesIn" property="foaf:maker schema:creator schema:author schema:publisher" href="https://www.linkedin.com/in/tarek-bouzelat/" typeof="foaf:Person schema:Person" resource="">Tarek Bouzelat</a></li>
-    <li><a id="author-name" rev="lsc:participatesIn" property="foaf:maker schema:creator schema:author schema:publisher" href="https://www.linkedin.com/in/thomasfrancart/" typeof="foaf:Person schema:Person" resource="https://orcid.org/0000-0003-4648-0065">Thomas Francart</a></li>
+    <li><a id="author-name" rev="lsc:participatesIn" property="foaf:maker schema:creator schema:author schema:publisher" href="https://www.linkedin.com/in/thomasfrancart/" typeof="foaf:Person schema:Person" resource="https://orcid.org/0000-0003-4648-0065">Thomas Francart</a> (1)</li>
+    <li><a id="author-name" rev="lsc:participatesIn" property="foaf:maker schema:creator schema:author schema:publisher" href="https://www.linkedin.com/in/tarek-bouzelat/" typeof="foaf:Person schema:Person" resource="">Tarek Bouzelat</a> (1)</li>
+    <li><a id="author-name" rev="lsc:participatesIn" property="foaf:maker schema:creator schema:author schema:publisher" href="" typeof="foaf:Person schema:Person" resource="https://orcid.org/0000-0003-0762-2518">Badisse Dahamna</a> (2)</li>
+    <li><a id="author-name" rev="lsc:participatesIn" property="foaf:maker schema:creator schema:author schema:publisher" href="" typeof="foaf:Person schema:Person" resource="">Flavien Disson</a> (2)</li>
+    <li><a id="author-name" rev="lsc:participatesIn" property="foaf:maker schema:creator schema:author schema:publisher" href="" typeof="foaf:Person schema:Person" resource="">Romain Lelong</a> (2)</li>
+    <li><a id="author-name" rev="lsc:participatesIn" property="foaf:maker schema:creator schema:author schema:publisher" href="" typeof="foaf:Person schema:Person" resource="https://orcid.org/0000-0002-4051-2284">Catherine Letord</a> (2)</li>
+    <li><a id="author-name" rev="lsc:participatesIn" property="foaf:maker schema:creator schema:author schema:publisher" href="" typeof="foaf:Person schema:Person" resource="https://orcid.org/0000-0002-7162-318X">Stéfan J. Darmoni</a> (2)</li>
   </ul>
 
   <ul id="affiliations">
-    <li id="aff1">Sparna</li>
+    <li id="aff1">(1) <a href="https://www.sparna.fr">Sparna</a></li>
+    <li id="aff2">(2) <a href="https://www.cismef.org/cismef/desan/">Département de Santé Numérique du CHU Hôpitaux de Rouen – DéSaN</a></li>
   </ul>
 
 </header>
@@ -41,8 +52,7 @@
 <div datatype="rdf:HTML" property="schema:description">
       <h2 property="schema:name">Abstract</h2>
 
-      <p id="abstract">MCP-over-SPARQL is a Model Context Protocol server that provides tools enabling a client LLM to successfully write an execute a valid SPARQL query on a knowledge graph. The server connects an MCP-capable LLM client to a SPARQL endpoint together with other tools for retrieving an overview of the graph, curated query examples, and the detailled knowledge graph structure from a SHACL specification. In addition, it exposes a reconciliation function to retrieve entity URIs from a label and a type. This provides all the necessary primitives for an LLM client to turn a natural language question into a SPARQL query, using a correct graph structure and valid URI identifiers. The system reduces schema guessing and returns data from the endpoint. We demonstrate the approach on the the Standardized Drug Nomenclature of France e-health agency, and show how it supports controlled, schema-aware querying of domain-specific knowledge graphs.</p>
-
+      <p id="abstract">MCP-over-SPARQL is a Model Context Protocol server that provides tools enabling a client LLM to successfully write an execute a valid SPARQL query on a knowledge graph. The server connects an MCP-capable LLM client to a SPARQL endpoint together with other tools for retrieving an overview of the graph, curated query examples, and the detailled knowledge graph structure from a SHACL specification. In addition, it exposes a reconciliation function to retrieve entity URIs from a label and a type. This provides all the necessary primitives for an LLM client to turn a natural language question into a SPARQL query, using a correct graph structure and valid URI identifiers. The system reduces schema guessing and returns data from the endpoint. We demonstrate the approach on the the Standardized Drug Nomenclature of France digital health agency, and show how it supports controlled, schema-aware querying of domain-specific knowledge graphs. The objective of this project is to build an hydrid AI tool about drug knowledge. This project was granted by the PARTAGE project under the French National call from BPI France (France 2030 digital commons for generative AI).</p>
     </div>
 </section>
 
@@ -55,8 +65,8 @@
 
         <p>Knowledge graphs are sources of trustworthy structured data, but leveraging this data directly in <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.w3.org/TR/sparql11-query/">SPARQL</a> <span class="references">[<a href="#ref-1">1</a>]</span> requires understanding the underlying schema, the available predicates, and the URI identifiers used in the graph. Yet, data publishers often wants to maximise the reuse of their knowledge graph, and making such datasets query-able by AI systems is a interesting dissemination channel towards non-technical audience.</p>
 
-        <p>Large Language Models (LLM) can query external sources when they are connected to tools through the <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.anthropic.com/news/model-context-protocol">Model Context Protocol</a> <span class="references">[<a href="#ref-2">2</a>]</span>. In this demo, we present <a property="schema:citation http://purl.org/spar/cito/cites" href="https://github.com/sparna-git/sparnatural-services">MCP-over-SPARQL</a> <span class="references">[<a href="#ref-3">3</a>]</span>, an MCP server driven by a <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.w3.org/TR/shacl/">SHACL</a> <span class="references">[<a href="#ref-4">4</a>]</span> specification that describes the underlying knowledge graph structure. The server exposes this structure through a small set of schema-grounded tools that let an MCP-capable client discover the schema, inspect relevant types, reconcile named entities, and execute SPARQL queries.</p>
-
+        <p>Large Language Models (LLM) can query external sources when they are connected to tools through the <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.anthropic.com/news/model-context-protocol">Model Context Protocol</a> <span class="references">[<a href="#ref-2">2</a>]</span>. In this demo, we present <a property="schema:citation http://purl.org/spar/cito/cites" href="https://github.com/sparna-git/sparnatural-services">MCP-over-SPARQL</a> <span class="references">[<a href="#ref-3">3</a>]</span>, an MCP server driven by a <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.w3.org/TR/shacl/">SHACL</a> <span class="references">[<a href="#ref-4">4</a>]</span> specification that describes the underlying knowledge graph structure. The server exposes this structure through a small set of schema-grounded tools that let an MCP-capable client discover the schema, inspect relevant types, reconcile named entities, and execute SPARQL queries.
+Led by the Health Data Hub (prime contractor) and bringing together over 30 academic, hospital, and industrial partners, including the Department of Digital Health of the Rouen University Hospital (RUH), the PARTAGES project aims to develop digital commons to support the use of generative large language models (LLMs) in healthcare. Several open-source deliverables are planned, including: a French-language medical language model, a corpus of synthetic hospital reports written by physicians, seven specialized models addressing practical use cases, and a federated evaluation platform, deployed on 20 health institutions, including the RUH.</p>
       </div>
 </section>
 
@@ -147,6 +157,10 @@ LIMIT 20
 
         <p>Note how the AI was able to overcome two ambiguities with the original query : 1/ it asks for generic drugs but using the name of a substance and not a product 2/ the name of the substance is itself ambiguous. Note also how the query is correct at the first iteration, and contains human-readable labels and marketing authorization holder.</p>
 
+        <p>Some tests show the limits of the approach :
+  - Sometimes the AI does not use the MCP server but uses a web search, or its own knowledge
+  - Sometimes the AI does not use the reconcile_entities tool but rather tries to lookup the entities directly in SPARQL (we tried to mitigate that with <code>sh:agentInstruction</code> hints)
+  - Sometimes the answer is correct but requires multiple queries in order to retrieve a good result</p>
       </div>
 </section>
 
@@ -154,6 +168,7 @@ LIMIT 20
 <div datatype="rdf:HTML" property="schema:description">
         <h2 property="schema:name">Conclusion and Future Work</h2>
 
+        <p id="conclusion">We have presented an hybrid AI tool (generative AI &amp; knowledge graph) about French drug model developed by the French digital health agency. The next phase will be the evaluation of this proof of concept, using a list of drug questions formalized by pharmacists. The respective impact of generative AI and knowledge will be blindly evaluated: one pharmacist and two physicians will evaluate the hybrid AI vs. the generative AI alone.</p>
       </div>
 </section>
 
@@ -161,7 +176,7 @@ LIMIT 20
 <div datatype="rdf:HTML" property="schema:description">
         <h2 property="schema:name">Ethics and Environmental Footprint</h2>
 
-        <p id="ethics">It must be recalled that the AI systems used are responsible of an increase in the demand for electricity, water, and rare materials. Moreover, The providers of these systems do not disclose the content of their models, the source of the data used, or the work done in poor countries to make it usable.</p>
+        <p id="ethics">It must be recalled that the AI systems used are responsible of an increase in the demand for electricity, water, and rare materials. Moreover, the providers of these systems do not disclose the content of their models, the source of the data used, or the work done in poor countries to make it usable.</p>
       </div>
 </section>
 
@@ -173,6 +188,15 @@ LIMIT 20
       </div>
 </section>
 
+  <section id="acknowledgments" inlist="" rel="schema:hasPart" resource="#acknowledgments">
+<div datatype="rdf:HTML" property="schema:description">
+        <h2 property="schema:name">Acknowledgments</h2>
+
+        <p id="acknowledgments">This work was partially granted by (a) the PARTAGES project (n° DOS0245197) under the French National call from BPI France (France 2030 digital commons for generative AI).</p>
+      </div>
+</section>
+
+  <br />
 </main>
 
 <footer><section>
