@@ -157,13 +157,7 @@ LIMIT 20
 
         <p>Note how the AI was able to overcome two ambiguities with the original query : 1/ it asks for generic drugs but using the name of a substance and not a product 2/ the name of the substance is itself ambiguous. Note also how the query is correct at the first iteration, and contains human-readable labels and marketing authorization holder.</p>
 
-        <p>Some tests show the limits of the approach :</p>
-
-        <ul>
-          <li>Sometimes the AI does not use the MCP server but uses a web search, or its own knowledge</li>
-          <li>Sometimes the AI does not use the reconcile_entities tool but rather tries to lookup the entities directly in SPARQL (we tried to mitigate that with <code>sh:agentInstruction</code> hints)</li>
-          <li>Sometimes the answer is correct but requires multiple SPARQL queries in order to retrieve a good result</li>
-        </ul>
+        <p>Some tests show the limits of the approach : sometimes the AI does not use the MCP server but uses a web search, or its own knowledge; sometimes it does not use the reconcile_entities tool but rather tries to lookup the entities directly in SPARQL (we tried to mitigate that with <code>sh:agentInstruction</code> hints); sometimes the answer is correct but requires multiple SPARQL queries in order to retrieve a good result.</p>
       </div>
 </section>
 
