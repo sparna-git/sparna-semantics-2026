@@ -8,8 +8,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   
   <meta name="citation_title" content="MCP-over-SPARQL : Giving AI the tools to query knowledge graphs">
-  <meta name="citation_author" content="Thomas Francart" />
   <meta name="citation_author" content="Tarek Bouzelat" />
+  <meta name="citation_author" content="Thomas Francart" />
   <meta name="citation_author" content="Badisse Dahamna" />
   <meta name="citation_author" content="Flavien Disson" />
   <meta name="citation_author" content="Romain Lelong" />
@@ -24,8 +24,8 @@
   <h1 id="mcp-over-sparql--giving-ai-the-tools-to-query-knowledge-graphs">MCP-over-SPARQL : Giving AI the tools to query knowledge graphs</h1>
 
   <ul id="authors">
-    <li><a id="author-name" rev="lsc:participatesIn" property="foaf:maker schema:creator schema:author schema:publisher" href="https://www.linkedin.com/in/thomasfrancart/" typeof="foaf:Person schema:Person" resource="https://orcid.org/0000-0003-4648-0065">Thomas Francart</a> (1)</li>
     <li><a id="author-name" rev="lsc:participatesIn" property="foaf:maker schema:creator schema:author schema:publisher" href="https://www.linkedin.com/in/tarek-bouzelat/" typeof="foaf:Person schema:Person" resource="">Tarek Bouzelat</a> (1)</li>
+    <li><a id="author-name" rev="lsc:participatesIn" property="foaf:maker schema:creator schema:author schema:publisher" href="https://www.linkedin.com/in/thomasfrancart/" typeof="foaf:Person schema:Person" resource="https://orcid.org/0000-0003-4648-0065">Thomas Francart</a> (1)</li>
     <li><a id="author-name" rev="lsc:participatesIn" property="foaf:maker schema:creator schema:author schema:publisher" href="" typeof="foaf:Person schema:Person" resource="https://orcid.org/0000-0003-0762-2518">Badisse Dahamna</a> (2)</li>
     <li><a id="author-name" rev="lsc:participatesIn" property="foaf:maker schema:creator schema:author schema:publisher" href="" typeof="foaf:Person schema:Person" resource="">Flavien Disson</a> (2)</li>
     <li><a id="author-name" rev="lsc:participatesIn" property="foaf:maker schema:creator schema:author schema:publisher" href="" typeof="foaf:Person schema:Person" resource="">Romain Lelong</a> (2)</li>
@@ -85,11 +85,11 @@ Led by the Health Data Hub (prime contractor) and bringing together over 30 acad
 
         <p>The <code>schema_overview</code> tool derives a high-level synthesis of the graph and returns it as markdown listing the classes it contains along with some additional information about each of them. It is deliberately incomplete and acts as a high-level table of contents, not sufficient on its own to write a correct query. The schema overview also includes a synthetic description of expected query use-cases, with, for each use-case, the corresponding class to use, with expected joins to/from other classes.</p>
 
-        <p>The <code>discover_nodeshapes</code> tool returns detailed definitions of shapes/classes. It reads the SHACL file and returns a detailed list of properties for each requested shape. For each property, it provides a label and description and details such as its path, datatype, and cardinality. Beyond structural constraints, each shape can also carry natural-language guidance through <code>sh:agentInstruction</code>, a non-validating feature introduced in SHACL 1.2. When the client discovers a shape, these instructions are returned alongside its predicates and cardinalities, allowing the data publisher to guide how a class or property should be used, for example by indicating which identifier to prefer or how to interpret a relation. The schema therefore conveys not only the structure of the graph, but also human-authored hints for the agent.</p>
+        <p>The <code>discover_nodeshapes</code> tool returns detailed definitions of shapes/classes. It reads the SHACL file and returns a detailed list of properties for each requested shape. For each property, it provides a label and description and details such as its path, datatype, and cardinality. Beyond structural constraints, each shape can also carry natural-language guidance through <code>sh:agentInstruction</code>, a non-validating feature introduced in <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.w3.org/TR/shacl12-core/">SHACL 1.2</a> <span class="references">[<a href="#ref-5">5</a>]</span>. When the client discovers a shape, these instructions are returned alongside its predicates and cardinalities, allowing the data publisher to guide how a class or property should be used, for example by indicating which identifier to prefer or how to interpret a relation. The schema therefore conveys not only the structure of the graph, but also human-authored hints for the agent.</p>
 
         <p>The <code>get_few_shots</code> tool returns curated, validated examples for the graph, each pairing a natural-language question with its expected SPARQL query.</p>
 
-        <p>The <code>reconcile_entities</code> tool relies on an underlying service that conforms to the <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.w3.org/community/reports/reconciliation/CG-FINAL-specs-0.2-20230410/">Reconciliation Service API Specification</a> <span class="references">[<a href="#ref-5">5</a>]</span>. It takes two input parameters, a label to search and the URI of the entity’s shape to look up, and returns a list of entities, each with a score. This service can be implemented, depending on the project, as a plain SPARQL-based search (inefficient and unsuitable for plain-text lookups), the triplestore’s proprietary full-text indexing, an existing API, or a custom-built search index filled with the labels of the graph’s entities.</p>
+        <p>The <code>reconcile_entities</code> tool relies on an underlying service that conforms to the <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.w3.org/community/reports/reconciliation/CG-FINAL-specs-0.2-20230410/">Reconciliation Service API Specification</a> <span class="references">[<a href="#ref-6">6</a>]</span>. It takes two input parameters, a label to search and the URI of the entity’s shape to look up, and returns a list of entities, each with a score. This service can be implemented, depending on the project, as a plain SPARQL-based search (inefficient and unsuitable for plain-text lookups), the triplestore’s proprietary full-text indexing, an existing API, or a custom-built search index filled with the labels of the graph’s entities.</p>
 
         <p>Finally, the <code>query_sparql</code> tool simply takes a SPARQL query as input and returns the result in <code>application/sparql-results+json</code>.</p>
 
@@ -102,12 +102,12 @@ Led by the Health Data Hub (prime contractor) and bringing together over 30 acad
 <div datatype="rdf:HTML" property="schema:description">
         <h2 property="schema:name">Schema-Grounded Query Workflow</h2>
 
-        <p id="workflow">In a typical case, the client turns a natural-language question into a correct SPARQL query by following the expected multi-step workflow shown in Figure 2.</p>
+        <p id="workflow">In a typical case, the AI client turns a natural-language question into a SPARQL query by following the multi-step workflow shown in Figure 2.</p>
 
         <figure id="fig-workflow">
 <img src="img/sequence2.png" alt="Sequence diagram: a natural-language question goes from the user to the MCP client, which calls the server's tools in order — schema_overview and discover_nodeshapes read the SHACL model, reconcile_entities returns entity IRIs, and query_sparql executes against the SPARQL endpoint — and real-data results are returned to the user." />
 <figcaption>
-            <p><span class="label">Fig. 2:</span> Lifecycle of a single query processing: the MCP client orchestrates the server’s tools to turn a natural-language question into a query executed against the endpoint.</p>
+            <p><span class="label">Fig. 2:</span> Lifecycle of a query processing: the MCP client orchestrates the server’s tools to turn a natural-language question into a query executed against the endpoint.</p>
           </figcaption>
 </figure>
 
@@ -120,20 +120,19 @@ Led by the Health Data Hub (prime contractor) and bringing together over 30 acad
 <div datatype="rdf:HTML" property="schema:description">
         <h2 property="schema:name">Demonstration</h2>
 
-        <p id="demonstration">An online demo of MCP-over-SPARQL is <strong>https:/​/​services.sparnatural.eu/mcp/ruim-mcp</strong>. It exposes the structure of the Standardized Drug Nomenclature of France e-health agency (RUIM) <span class="references">[<a href="#ref-6">6</a>]</span>, with its <a property="schema:citation http://purl.org/spar/cito/cites" href="https://github.com/sparna-git/referentiel-medicaments/blob/main/shacl/RUIM-SHACL-instances.ttl">SHACL specification</a> <span class="references">[<a href="#ref-7">7</a>]</span>, and its <a property="schema:citation http://purl.org/spar/cito/cites" href="https://smt.esante.gouv.fr/sparql/">online SPARQL endpoint</a> <span class="references">[<a href="#ref-8">8</a>]</span>.The SHACL specification contains extensive documentation of each entity and properties.</p>
+        <p id="demonstration">An online prototype of MCP-over-SPARQL can be tested at <strong>https:/​/​services.sparnatural.eu/mcp/ruim-mcp</strong>. A <a property="schema:citation http://purl.org/spar/cito/cites" href="https://github.com/sparna-git/sparna-semantics-2026/raw/refs/heads/main/demo/demo-mcp-ruim-mp4.zip">2 minutes video</a> <span class="references">[<a href="#ref-7">7</a>]</span> is also available. The prototype exposes the structure of the Standardized Drug Nomenclature of France e-health agency (RUIM) <span class="references">[<a href="#ref-8">8</a>]</span>, with its <a property="schema:citation http://purl.org/spar/cito/cites" href="https://github.com/sparna-git/referentiel-medicaments/blob/main/shacl/RUIM-SHACL-instances.ttl">SHACL specification</a> <span class="references">[<a href="#ref-9">9</a>]</span>, and its <a property="schema:citation http://purl.org/spar/cito/cites" href="https://smt.esante.gouv.fr/sparql/">online SPARQL endpoint</a> <span class="references">[<a href="#ref-10">10</a>]</span>. The SHACL specification contains extensive documentation of each entity and properties.</p>
 
         <p>Using Mistral Vibe (Chat) with the query <em>“What does bi profenid contains ?”</em> (<em>“Que contient le bi profénid ?”</em>), the AI follows this sequence:</p>
 
         <ol>
+          <li>Calls <code>schema_overview</code> to read the overview of the graph structure; sometimes this step is skipped (The allowable shapes identifiers are already listed as enum in the input schema of the <code>discover_nodeshape</code> tool, hence the AI may not feel the necessity to retrieve the overview.)</li>
           <li>Calls <code>discover_nodeshapes</code> with the shapes <code>med:SpecialitePharmaceutique</code>, <code>med:Element</code> and <code>med:Substance</code> (<em>“medicinal product”</em>, <em>“manufactured item”</em> and <em>“substance”</em>) to read their properties</li>
           <li>Calls <code>reconcile_entities</code> with “bi profenid” on <code>med:SpecialitePharmaceutique</code>, and retrieves its URI (<code>...SpecialitePharmaceutique_61165486</code>)</li>
-          <li>Generates and executes the following query, to retrive the correct answer (“Ketoprofène”):</li>
+          <li>Generates and executes the following query, to retrieve the correct answer (“Ketoprofène”):</li>
         </ol>
-
         <pre><code>
 PREFIX med: &lt;http://data.esante.gouv.fr/ansm/medicament/&gt;
 PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
-
 SELECT DISTINCT ?substance ?substance_label WHERE {
   &lt;http://data.esante.gouv.fr/ansm/medicament/SpecialitePharmaceutique_61165486&gt; med:substanceActive ?substance .
   ?substance rdfs:label ?substance_label .
@@ -143,9 +142,7 @@ LIMIT 20
 </code></pre>
         <p><br /></p>
 
-        <p>We note that the tool <code>schema_overview</code> was not called by the AI. The allowable shapes identifiers are already listed as enum in the input schema of the <code>discover_nodeshape</code> tool, hence the AI did not felt the necessity to call the overview.</p>
-
-        <p>Using Claude Sonnet 4.6, low effort, with the request <em>“What are the generics of perindopril ?”</em> (<em>“Quels sont les génériques du périndopril ?”</em>), and after reading the tools from the MCP-over-SPARQL server, the AI follows this sequence:</p>
+        <p>Using Claude Sonnet 4.6, low effort, with the request <em>“What are the generics of perindopril ?”</em> (<em>“Quels sont les génériques du périndopril ?”</em>), the AI follows this sequence:</p>
 
         <ol>
           <li>Calls <code>get_few_shots</code> to read example queries</li>
@@ -155,9 +152,9 @@ LIMIT 20
           <li>Then produces and executes a (correct) SPARQL query containing the 4 Substances URI, the drug groupings and the marketing authorization holder of each drug (although not requested)</li>
         </ol>
 
-        <p>Note how the AI was able to overcome two ambiguities with the original query : 1/ it asks for generic drugs but using the name of a substance and not a product 2/ the name of the substance is itself ambiguous. Note also how the query is correct at the first iteration, and contains human-readable labels and marketing authorization holder.</p>
+        <p>Note how the AI was able to overcome two ambiguities with the original query : 1/ it asks for generic drugs but using the name of a substance and not a product 2/ the name of the substance is itself ambiguous. Note also how the query is correct at the first iteration.</p>
 
-        <p>Some tests show the limits of the approach : sometimes the AI does not use the MCP server but uses a web search, or its own knowledge; sometimes it does not use the reconcile_entities tool but rather tries to lookup the entities directly in SPARQL (we tried to mitigate that with <code>sh:agentInstruction</code> hints); sometimes the answer is correct but requires multiple SPARQL queries in order to retrieve a good result.</p>
+        <p>Some tests also show the limits of the approach : sometimes the AI does not use the MCP server but uses a web search, or its own knowledge; sometimes it does not use the <code>reconcile_entities</code> tool but rather tries to lookup the entities directly in SPARQL (we tried to mitigate that with <code>sh:agentInstruction</code> hints); sometimes the answer is correct but requires multiple SPARQL queries in order to retrieve a good result.</p>
       </div>
 </section>
 
@@ -210,13 +207,17 @@ LIMIT 20
   <dt id="ref-4">[4]</dt>
   <dd resource="https://www.w3.org/TR/shacl/" typeof="schema:CreativeWork">Knublauch, H., Kontokostas, D.: Shapes Constraint Language (SHACL). <a href="https://www.w3.org/TR/shacl/">https:/​/​www.w3.org/TR/shacl/</a> (2017).</dd>
   <dt id="ref-5">[5]</dt>
-  <dd resource="https://www.w3.org/community/reports/reconciliation/CG-FINAL-specs-0.2-20230410/" typeof="schema:CreativeWork">W3C Entity Reconciliation Community Group: Reconciliation Service API, Version 0.2. <a href="https://www.w3.org/community/reports/reconciliation/CG-FINAL-specs-0.2-20230410/">https:/​/​www.w3.org/community/reports/reconciliation/CG-FINAL-specs-0.2-20230410/</a> (2023).</dd>
+  <dd resource="https://www.w3.org/TR/shacl12-core/" typeof="schema:CreativeWork">W3C Data Shapes Working Group: SHACL 1.2 Core. <a href="https://www.w3.org/TR/shacl12-core/">https:/​/​www.w3.org/TR/shacl12-core/</a> (2026).</dd>
   <dt id="ref-6">[6]</dt>
-  <dd resource="https://dx.doi.org/10.3233/SHTI250301" typeof="schema:Article">Development of a standardized drug nomenclature in France. Stud Health Technol Inform. 327, 198–202 (2025). doi:10.3233/SHTI250301</dd>
+  <dd resource="https://www.w3.org/community/reports/reconciliation/CG-FINAL-specs-0.2-20230410/" typeof="schema:CreativeWork">W3C Entity Reconciliation Community Group: Reconciliation Service API, Version 0.2. <a href="https://www.w3.org/community/reports/reconciliation/CG-FINAL-specs-0.2-20230410/">https:/​/​www.w3.org/community/reports/reconciliation/CG-FINAL-specs-0.2-20230410/</a> (2023).</dd>
   <dt id="ref-7">[7]</dt>
-  <dd resource="https://github.com/sparna-git/referentiel-medicaments/blob/main/shacl/RUIM-SHACL-instances.ttl" typeof="schema:CreativeWork"><a href="https://github.com/sparna-git/referentiel-medicaments/blob/main/shacl/RUIM-SHACL-instances.ttl">https:/​/​github.com/sparna-git/referentiel-medicaments/blob/main/shacl/RUIM-SHACL-instances.ttl</a></dd>
+  <dd resource="https://github.com/sparna-git/sparna-semantics-2026/raw/refs/heads/main/demo/demo-mcp-ruim-mp4.zip" typeof="schema:CreativeWork">2-min video of MCP-over-SPARQL prototype. <a href="https://github.com/sparna-git/sparna-semantics-2026/raw/refs/heads/main/demo/demo-mcp-ruim-mp4.zip">https:/​/​github.com/sparna-git/sparna-semantics-2026/raw/refs/heads/main/demo/demo-mcp-ruim-mp4.zip</a></dd>
   <dt id="ref-8">[8]</dt>
-  <dd resource="https://smt.esante.gouv.fr/sparql/" typeof="schema:CreativeWork"><a href="https://smt.esante.gouv.fr/sparql/">https:/​/​smt.esante.gouv.fr/sparql/</a></dd>
+  <dd resource="https://dx.doi.org/10.3233/SHTI250301" typeof="schema:Article">Development of a standardized drug nomenclature in France. Stud Health Technol Inform. 327, 198–202 (2025). doi:10.3233/SHTI250301</dd>
+  <dt id="ref-9">[9]</dt>
+  <dd resource="https://github.com/sparna-git/referentiel-medicaments/blob/main/shacl/RUIM-SHACL-instances.ttl" typeof="schema:CreativeWork">SHACL specification of the RUIM used for the MCP-over-SPARQL prototype. <a href="https://github.com/sparna-git/referentiel-medicaments/blob/main/shacl/RUIM-SHACL-instances.ttl">https:/​/​github.com/sparna-git/referentiel-medicaments/blob/main/shacl/RUIM-SHACL-instances.ttl</a></dd>
+  <dt id="ref-10">[10]</dt>
+  <dd resource="https://smt.esante.gouv.fr/sparql/" typeof="schema:CreativeWork">RUIM SPARQL endpoint. <a href="https://smt.esante.gouv.fr/sparql/">https:/​/​smt.esante.gouv.fr/sparql/</a></dd>
 </dl>
 </section>
 </footer>
