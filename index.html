@@ -157,10 +157,13 @@ LIMIT 20
 
         <p>Note how the AI was able to overcome two ambiguities with the original query : 1/ it asks for generic drugs but using the name of a substance and not a product 2/ the name of the substance is itself ambiguous. Note also how the query is correct at the first iteration, and contains human-readable labels and marketing authorization holder.</p>
 
-        <p>Some tests show the limits of the approach :
-  - Sometimes the AI does not use the MCP server but uses a web search, or its own knowledge
-  - Sometimes the AI does not use the reconcile_entities tool but rather tries to lookup the entities directly in SPARQL (we tried to mitigate that with <code>sh:agentInstruction</code> hints)
-  - Sometimes the answer is correct but requires multiple queries in order to retrieve a good result</p>
+        <p>Some tests show the limits of the approach :</p>
+
+        <ul>
+          <li>Sometimes the AI does not use the MCP server but uses a web search, or its own knowledge</li>
+          <li>Sometimes the AI does not use the reconcile_entities tool but rather tries to lookup the entities directly in SPARQL (we tried to mitigate that with <code>sh:agentInstruction</code> hints)</li>
+          <li>Sometimes the answer is correct but requires multiple SPARQL queries in order to retrieve a good result</li>
+        </ul>
       </div>
 </section>
 
@@ -168,7 +171,9 @@ LIMIT 20
 <div datatype="rdf:HTML" property="schema:description">
         <h2 property="schema:name">Conclusion and Future Work</h2>
 
-        <p id="conclusion">We have presented an hybrid AI tool (generative AI &amp; knowledge graph) about French drug model developed by the French digital health agency. The next phase will be the evaluation of this proof of concept, using a list of drug questions formalized by pharmacists. The respective impact of generative AI and knowledge will be blindly evaluated: one pharmacist and two physicians will evaluate the hybrid AI vs. the generative AI alone.</p>
+        <p id="conclusion">The MCP-over-SPARQL approach enables a SHACL-grounded connection of a SPARQL-accessible knowledge graph from an AI. It can be configured for different knowledge graphs. One of the idea is that even small LLM models would be capable of understanding the structure of the graph and querying it in SPARQL.</p>
+
+        <p>This approach leds to an hybrid AI tool (combination of generative AI &amp; knowledge graph) about French drug model developed by the French digital health agency. The next phase will be the evaluation of this proof of concept, using a list of drug questions formalized by pharmacists. The respective impact of generative AI and knowledge will be blindly evaluated: one pharmacist and two physicians will evaluate the hybrid AI vs. the generative AI alone.</p>
       </div>
 </section>
 
