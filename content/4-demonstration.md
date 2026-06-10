@@ -36,8 +36,4 @@ Using Claude Sonnet 4.6, low effort, with the request _"What are the generics of
 
 Note how the AI was able to overcome two ambiguities with the original query : 1/ it asks for generic drugs but using the name of a substance and not a product 2/ the name of the substance is itself ambiguous. Note also how the query is correct at the first iteration, and contains human-readable labels and marketing authorization holder.
 
-Some tests show the limits of the approach :
-
-  - Sometimes the AI does not use the MCP server but uses a web search, or its own knowledge
-  - Sometimes the AI does not use the reconcile_entities tool but rather tries to lookup the entities directly in SPARQL (we tried to mitigate that with `sh:agentInstruction` hints)
-  - Sometimes the answer is correct but requires multiple SPARQL queries in order to retrieve a good result
+Some tests show the limits of the approach : sometimes the AI does not use the MCP server but uses a web search, or its own knowledge; sometimes it does not use the reconcile_entities tool but rather tries to lookup the entities directly in SPARQL (we tried to mitigate that with `sh:agentInstruction` hints); sometimes the answer is correct but requires multiple SPARQL queries in order to retrieve a good result.
