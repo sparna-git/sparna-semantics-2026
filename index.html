@@ -16,7 +16,7 @@
   <meta name="citation_author" content="Catherine Letord" />
   <meta name="citation_author" content="Stéfan J. Darmoni" />
   
-  <meta name="citation_publication_date" content="2026/06/10" />
+  <meta name="citation_publication_date" content="2026/06/11" />
 </head>
 
 <body prefix="dctypes: http://purl.org/dc/dcmitype/ pimspace: http://www.w3.org/ns/pim/space# rsa: http://www.w3.org/ns/auth/rsa# cert: http://www.w3.org/ns/auth/cert# wgs: http://www.w3.org/2003/01/geo/wgs84_pos# biblio: http://purl.org/net/biblio# bibo: http://purl.org/ontology/bibo/ book: http://purl.org/NET/book/vocab# ov: http://open.vocab.org/terms/ doap: http://usefulinc.com/ns/doap# dbr: http://dbpedia.org/resource/ dbp: http://dbpedia.org/property/ sio: http://semanticscience.org/resource/ opmw: http://www.opmw.org/ontology/ deo: http://purl.org/spar/deo/ doco: http://purl.org/spar/doco/ cito: http://purl.org/spar/cito/ fabio: http://purl.org/spar/fabio/ solid: http://www.w3.org/ns/solid/terms# acl: http://www.w3.org/ns/auth/acl# dio: https://w3id.org/dio# lsc: http://linkedscience.org/lsc/ns#" typeof="schema:CreativeWork sioc:Post prov:Entity lsc:Research">
@@ -79,13 +79,13 @@ Led by the Health Data Hub (prime contractor) and bringing together over 30 acad
         <figure id="fig-architecture">
 <img src="img/architecture11.png" alt="Architecture diagram: an MCP client (LLM) connects over stdio or HTTP to the MCP-over-SPARQL server, whose tools (schema overview, curated examples, node-shape discovery, entity reconciliation, SPARQL execution, and healthcheck) read the SHACL model, resolve entities through a reconciliation service, and execute queries against the SPARQL endpoint." />
 <figcaption>
-            <p><span class="label">Fig. 1:</span> Architecture of MCP-over-SPARQL: an MCP client (LLM) calls the server’s tools, which are grounded in a SHACL model of the data, resolve entities through a reconciliation service, and execute queries against the project’s SPARQL endpoint.</p>
+            <p><span class="label">Fig. 1:</span> Architecture of MCP-over-SPARQL</p>
           </figcaption>
 </figure>
 
         <p>The <code>schema_overview</code> tool derives a high-level synthesis of the graph and returns it as markdown listing the classes it contains along with some additional information about each of them. It is deliberately incomplete and acts as a high-level table of contents, not sufficient on its own to write a correct query. The schema overview also includes a synthetic description of expected query use-cases, with, for each use-case, the corresponding class to use, with expected joins to/from other classes.</p>
 
-        <p>The <code>discover_nodeshapes</code> tool returns detailed definitions of shapes/classes. It reads the SHACL file and returns a detailed list of properties for each requested shape. For each property, it provides a label and description and details such as its path, datatype, and cardinality. Beyond structural constraints, each shape can also carry natural-language guidance through <code>sh:agentInstruction</code>, a non-validating feature introduced in <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.w3.org/TR/shacl12-core/">SHACL 1.2</a> <span class="references">[<a href="#ref-5">5</a>]</span>. When the client discovers a shape, these instructions are returned alongside its predicates and cardinalities, allowing the data publisher to guide how a class or property should be used, for example by indicating which identifier to prefer or how to interpret a relation. The schema therefore conveys not only the structure of the graph, but also human-authored hints for the agent.</p>
+        <p>The <code>discover_nodeshapes</code> tool returns detailed definitions of shapes/classes. It reads the SHACL file and returns a detailed list of properties for each requested shape. For each property, it provides a label and description and details such as its path, datatype, and cardinality. Beyond structural constraints, each shape can also carry AI-oriented guidance in <code>sh:agentInstruction</code>, an annotation introduced in <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.w3.org/TR/shacl12-core/">SHACL 1.2</a> <span class="references">[<a href="#ref-5">5</a>]</span>. This allow the data publisher to guide how a class or property should be used with “hints”, for example by indicating which identifier to prefer or how to interpret a relation.</p>
 
         <p>The <code>get_few_shots</code> tool returns curated, validated examples for the graph, each pairing a natural-language question with its expected SPARQL query.</p>
 
@@ -180,7 +180,8 @@ LIMIT 20
 <div datatype="rdf:HTML" property="schema:description">
         <h2 property="schema:name">Declaration on Generative AI</h2>
 
-        <p id="genai">The authors have not employed any Generative AI tools for the writing of this submission.</p>
+        <p id="genai">During the preparation of this work, Claude Opus was used in order to: Improve Writing Style.
+The authors reviewed and edited the content as needed and take full responsibility for the publication’s content.</p>
       </div>
 </section>
 
