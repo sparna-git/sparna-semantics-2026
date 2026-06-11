@@ -34,8 +34,8 @@
   </ul>
 
   <ul id="affiliations">
-    <li id="aff1">(1) <a href="https://www.sparna.fr">Sparna</a></li>
-    <li id="aff2">(2) <a href="https://www.cismef.org/cismef/desan/">Département de Santé Numérique du CHU Hôpitaux de Rouen – DéSaN</a></li>
+    <li id="aff1">(1) <a href="https://www.sparna.fr">Sparna</a>, Tours, France</li>
+    <li id="aff2">(2) <a href="https://www.cismef.org/cismef/desan/">Département de Santé Numérique (DéSaN) CHU de Rouen</a>, Rouen, France</li>
   </ul>
 
 </header>
@@ -52,7 +52,7 @@
 <div datatype="rdf:HTML" property="schema:description">
       <h2 property="schema:name">Abstract</h2>
 
-      <p id="abstract">In this paper we present MCP-over-SPARQL, a Model Context Protocol server that provides tools enabling a client AI to successfully write an execute a valid SPARQL query on a knowledge graph. The server connects an MCP-capable AI client to a SPARQL endpoint together with other tools for retrieving an overview of the graph, curated query examples, and the detailled knowledge graph structure from a SHACL specification. In addition, it exposes a reconciliation tool to retrieve entity URIs from a label and a type. This provides the necessary primitives for an AI client to turn a natural language question into a SPARQL query, using a correct graph structure and valid URI identifiers. The system reduces schema guessing and returns data from the graph. We demonstrate the approach on the the Standardized Drug Nomenclature of France digital health agency, and show how it supports controlled, schema-aware querying of domain-specific knowledge graphs. The objective of this project is to build an hydrid AI tool about drug knowledge.</p>
+      <p id="abstract">In this paper we present MCP-over-SPARQL, a Model Context Protocol server that provides tools enabling a client AI to successfully write and execute a valid SPARQL query on a knowledge graph. The server connects an MCP-capable AI client to a SPARQL endpoint together with other tools for retrieving an overview of the graph, curated query examples, and the detailled knowledge graph structure from a SHACL specification. In addition, it exposes a reconciliation tool to retrieve entity URIs from a label and a type. This provides the necessary primitives for an AI client to turn a natural language question into a SPARQL query, using a correct graph structure and valid URI identifiers. The system reduces schema guessing and returns data from the graph. The approach is demonstrated using the Standardized Drug Nomenclature of France digital health agency, and show how it supports controlled, schema-aware querying of domain-specific knowledge graphs. The objective of this project is to build an hybrid AI system for drug knowledge.</p>
     </div>
 </section>
 
@@ -63,10 +63,10 @@
 <div datatype="rdf:HTML" property="schema:description">
         <h2 property="schema:name">Introduction</h2>
 
-        <p>Knowledge graphs are sources of trustworthy structured data, but leveraging this data directly in <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.w3.org/TR/sparql11-query/">SPARQL</a> <span class="references">[<a href="#ref-1">1</a>]</span> requires understanding the underlying schema, the available predicates, and the URI identifiers used in the graph. Yet, data publishers often wants to maximise the reuse of their knowledge graph, and making such datasets query-able by AI systems is a interesting dissemination channel towards non-technical audience.</p>
+        <p>Knowledge graphs are sources of trustworthy structured data, but leveraging this data directly in <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.w3.org/TR/sparql11-query/">SPARQL</a> <span class="references">[<a href="#ref-1">1</a>]</span> requires understanding the underlying schema, the available predicates, and the URI identifiers used in the graph. Yet, data publishers often want to maximise the reuse of their knowledge graph, and making such datasets query-able by AI systems is an interesting dissemination channel towards non-technical audience.</p>
 
         <p>Large Language Models (LLM) can query external sources when they are connected to tools through the <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.anthropic.com/news/model-context-protocol">Model Context Protocol</a> <span class="references">[<a href="#ref-2">2</a>]</span>. In this demo, we present <a property="schema:citation http://purl.org/spar/cito/cites" href="https://github.com/sparna-git/sparnatural-services">MCP-over-SPARQL</a> <span class="references">[<a href="#ref-3">3</a>]</span>, an MCP server driven by a <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.w3.org/TR/shacl/">SHACL</a> <span class="references">[<a href="#ref-4">4</a>]</span> specification that describes the underlying knowledge graph structure. The server exposes this structure through a small set of schema-grounded tools that let an MCP-capable client discover the schema, inspect relevant types, reconcile named entities, and execute SPARQL queries.
-Led by the Health Data Hub (prime contractor) and bringing together over 30 academic, hospital, and industrial partners, including the Department of Digital Health of the Rouen University Hospital (RUH), the PARTAGES project aims to develop digital commons to support the use of generative large language models (LLMs) in healthcare. Several open-source deliverables are planned, including: a French-language medical language model, a corpus of synthetic hospital reports written by physicians, seven specialized models addressing practical use cases, and a federated evaluation platform, deployed on 20 health institutions, including the RUH.</p>
+The PARTAGES project, led by the Health Data Hub (prime contractor) and bringing together over 30 academic, hospital, and industrial partners, including the Department of Digital Health of the Rouen University Hospital (RUH), aims to develop digital commons to support the use of generative large language models (LLMs) in healthcare. Several open-source deliverables are planned, including: a French-language medical language model, a corpus of synthetic hospital reports written by physicians, seven specialized models addressing practical use cases, and a federated evaluation platform, deployed on 20 health institutions, including the RUH.</p>
       </div>
 </section>
 
@@ -74,7 +74,7 @@ Led by the Health Data Hub (prime contractor) and bringing together over 30 acad
 <div datatype="rdf:HTML" property="schema:description">
         <h2 property="schema:name">System Architecture</h2>
 
-        <p id="architecture">MCP-over-SPARQL sits between an MCP-capable LLM client and a SPARQL endpoint. Rather than exposing only a SPARQL endpoint service, its exposes the tools depicted in Figure 1 below.</p>
+        <p id="architecture">MCP-over-SPARQL sits between an MCP-capable LLM client and a SPARQL endpoint. Rather than exposing only a SPARQL endpoint service, it exposes the tools depicted in Figure 1 below.</p>
 
         <figure id="fig-architecture">
 <img src="img/architecture11.png" alt="Architecture diagram: an MCP client (LLM) connects over stdio or HTTP to the MCP-over-SPARQL server, whose tools (schema overview, curated examples, node-shape discovery, entity reconciliation, SPARQL execution, and healthcheck) read the SHACL model, resolve entities through a reconciliation service, and execute queries against the SPARQL endpoint." />
@@ -85,13 +85,13 @@ Led by the Health Data Hub (prime contractor) and bringing together over 30 acad
 
         <p>The <code>schema_overview</code> tool derives a high-level synthesis of the graph and returns it as markdown listing the classes it contains along with some additional information about each of them. It is deliberately incomplete and acts as a high-level table of contents, not sufficient on its own to write a correct query. The schema overview also includes a synthetic description of expected query use-cases, with, for each use-case, the corresponding class to use, with expected joins to/from other classes.</p>
 
-        <p>The <code>discover_nodeshapes</code> tool returns detailed definitions of shapes/classes. It reads the SHACL file and returns a detailed list of properties for each requested shape. For each property, it provides a label and description and details such as its path, datatype, and cardinality. Beyond structural constraints, each shape can also carry AI-oriented guidance in <code>sh:agentInstruction</code>, an annotation introduced in <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.w3.org/TR/shacl12-core/">SHACL 1.2</a> <span class="references">[<a href="#ref-5">5</a>]</span>. This allow the data publisher to guide how a class or property should be used with “hints”, for example by indicating which identifier to prefer or how to interpret a relation.</p>
+        <p>The <code>discover_nodeshapes</code> tool returns detailed definitions of shapes. It reads the SHACL file and returns a detailed list of properties for each requested shape. For each property, it provides a label and description and details such as its path, datatype, and cardinality. Beyond structural constraints, each shape can also carry AI-oriented guidance in <code>sh:agentInstruction</code>, an annotation introduced in <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.w3.org/TR/shacl12-core/">SHACL 1.2</a> <span class="references">[<a href="#ref-5">5</a>]</span>. This allow the data publisher to guide how a class or property should be used with “hints”, for example by indicating which identifier to prefer or how to interpret a relation.</p>
 
-        <p>The <code>get_few_shots</code> tool returns curated, validated examples for the graph, each pairing a natural-language question with its expected SPARQL query.</p>
+        <p>The <code>get_few_shots</code> tool returns curated, validated examples for the graph, each pairing a natural language question with the corresponding SPARQL query.</p>
 
         <p>The <code>reconcile_entities</code> tool relies on an underlying service that conforms to the <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.w3.org/community/reports/reconciliation/CG-FINAL-specs-0.2-20230410/">Reconciliation Service API Specification</a> <span class="references">[<a href="#ref-6">6</a>]</span>. It takes two input parameters, a label to search and the URI of the entity’s shape to look up, and returns a list of entities, each with a score. This service can be implemented, depending on the project, as a plain SPARQL-based search (inefficient and unsuitable for plain-text lookups), the triplestore’s proprietary full-text indexing, an existing API, or a custom-built search index filled with the labels of the graph’s entities.</p>
 
-        <p>Finally, the <code>query_sparql</code> tool simply takes a SPARQL query as input and returns the result in <code>application/sparql-results+json</code>.</p>
+        <p>Finally, the <code>query_sparql</code> tool takes a SPARQL query as input and returns the result in <code>application/sparql-results+json</code>.</p>
 
         <p>The server can be accessed either locally or remotely. It can be configured per “project”, each corresponding to a specific knowledge graph, with its own SHACL model and SPARQL endpoint, and exposed as a dedicated set of MCP tools. A unique server deployment can thus expose multiple knowledge graphs through MCP.</p>
 
@@ -120,9 +120,9 @@ Led by the Health Data Hub (prime contractor) and bringing together over 30 acad
 <div datatype="rdf:HTML" property="schema:description">
         <h2 property="schema:name">Demonstration</h2>
 
-        <p id="demonstration">An online prototype of MCP-over-SPARQL can be tested at <strong>https:/​/​services.sparnatural.eu/mcp/ruim-mcp</strong>. A <a property="schema:citation http://purl.org/spar/cito/cites" href="https://github.com/sparna-git/sparna-semantics-2026/raw/refs/heads/main/demo/demo-mcp-ruim-mp4.zip">2 minutes video</a> <span class="references">[<a href="#ref-7">7</a>]</span> shows how to connect it in an AI client. The prototype exposes the structure of the Standardized Drug Nomenclature of France e-health agency (RUIM) <span class="references">[<a href="#ref-8">8</a>]</span>, with its <a property="schema:citation http://purl.org/spar/cito/cites" href="https://github.com/sparna-git/referentiel-medicaments/blob/main/shacl/RUIM-SHACL-instances.ttl">SHACL specification</a> <span class="references">[<a href="#ref-9">9</a>]</span>, and its <a property="schema:citation http://purl.org/spar/cito/cites" href="https://smt.esante.gouv.fr/sparql/">online SPARQL endpoint</a> <span class="references">[<a href="#ref-10">10</a>]</span>. The SHACL specification contains extensive documentation of each entity and properties.</p>
+        <p id="demonstration">An online prototype of MCP-over-SPARQL can be tested at <strong>https:/​/​services.sparnatural.eu/mcp/ruim-mcp</strong>. A <a property="schema:citation http://purl.org/spar/cito/cites" href="https://github.com/sparna-git/sparna-semantics-2026/raw/refs/heads/main/demo/demo-mcp-ruim-mp4.zip">2-minute video</a> <span class="references">[<a href="#ref-7">7</a>]</span> shows how to connect it in an AI client. The prototype exposes the structure of the Standardized Drug Nomenclature of France e-health agency (RUIM) <span class="references">[<a href="#ref-8">8</a>]</span>, with its <a property="schema:citation http://purl.org/spar/cito/cites" href="https://github.com/sparna-git/referentiel-medicaments/blob/main/shacl/RUIM-SHACL-instances.ttl">SHACL specification</a> <span class="references">[<a href="#ref-9">9</a>]</span>, and its <a property="schema:citation http://purl.org/spar/cito/cites" href="https://smt.esante.gouv.fr/sparql/">online SPARQL endpoint</a> <span class="references">[<a href="#ref-10">10</a>]</span>. The SHACL specification contains extensive documentation of each entity and properties.</p>
 
-        <p>Using Mistral Vibe (Chat) with the query <em>“What does bi profenid contains ?”</em> (<em>“Que contient le bi profénid ?”</em>), the AI follows this sequence:</p>
+        <p>Using Mistral Vibe (Chat) with the query <em>“What does bi profenid contains ?”</em> (<em>“Que contient le bi profénid ?”</em>), the AI follows this workflow:</p>
 
         <ol>
           <li>Calls <code>schema_overview</code> to read the overview of the graph structure; sometimes this step is skipped (The allowable shapes identifiers are already listed as enum in the input schema of the <code>discover_nodeshape</code> tool, hence the AI may not feel the necessity to retrieve the overview.)</li>
@@ -164,7 +164,7 @@ LIMIT 20
 
         <p id="conclusion">The MCP-over-SPARQL approach enables a SHACL-grounded connection of a SPARQL-accessible knowledge graph from an AI. It can be configured for different knowledge graphs. It is hoped that even small LLM models would be capable of understanding the structure of the graph and querying it in SPARQL.</p>
 
-        <p>This approach leds to an hybrid AI tool (combination of generative AI &amp; knowledge graph) about French drug model developed by the French digital health agency. The next phase will be the evaluation of this proof of concept, using a list of drug questions formalized by pharmacists. The respective impact of generative AI and knowledge will be blindly evaluated: one pharmacist and two physicians will evaluate the hybrid AI vs. the generative AI alone.</p>
+        <p>This approach leads to an hybrid AI tool (combination of generative AI &amp; knowledge graph) about French drug model developed by the French digital health agency. The next phase involves evaluating this proof of concept through a benchmark of drug-related questions designed by pharmacists. The respective impact of generative AI and knowledge will be blindly evaluated: one pharmacist and two physicians will evaluate the hybrid AI vs. the generative AI alone.</p>
       </div>
 </section>
 
@@ -189,7 +189,7 @@ The authors reviewed and edited the content as needed and take full responsibili
 <div datatype="rdf:HTML" property="schema:description">
         <h2 property="schema:name">Acknowledgments</h2>
 
-        <p id="acknowledgments">This work was partially granted by (a) the PARTAGES project (n° DOS0245197) under the French National call from BPI France (France 2030 digital commons for generative AI).</p>
+        <p id="acknowledgments">This work was partially funded by (a) the PARTAGES project (n° DOS0245197) under the French National call from BPI France (France 2030 digital commons for generative AI).</p>
       </div>
 </section>
 
